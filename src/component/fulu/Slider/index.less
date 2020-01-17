@@ -1,0 +1,44 @@
+.myslider {
+    .title {
+        font-size: 16px;
+        color: #ffffff;
+        white-space: nowrap;
+        animation: fadeInLeft 500ms linear;
+    }
+    .white-icon {
+        margin-right: 10px;
+    }
+    @keyframes fadeInLeft {
+        from {
+            transform: translateX(5px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .menu-container {
+        position: absolute;
+        left: 0;
+        top: 64px;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        .anticon {
+            font-size: 18px;
+            vertical-align: text-bottom;
+        }
+        .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+            background: #121b24;
+            box-shadow: 0 0 0;
+        }
+        object {
+            position: relative;
+            top: 6px;
+            margin-right: 10px;
+        }
+    }
+    
+}

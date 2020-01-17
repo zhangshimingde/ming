@@ -1,0 +1,116 @@
+// 按钮样式
+.ant-btn {
+    height: auto !important;
+    padding: 5px 32px !important;
+    .rounded-corners;
+}
+
+.ant-btn-sm {
+    height: 24px !important;
+    padding: 0 7px !important;
+    font-size: 14px !important;
+    border-radius: 4px !important;
+}
+
+// 主要按钮样式
+.ant-btn-primary {
+    height: auto !important;
+    background: @btn-primary-color;
+    color: #fff;
+    border: none !important;
+    padding: 6px 32px !important;
+
+    &:hover {
+        background: @btn-primary-color-hover;
+    }
+}
+
+// 主要按钮禁用样式
+.ant-btn-primary[disabled],
+.ant-btn-primary-disabled {
+    background: @btn-primary-color-disabled;
+    color: #fff !important;
+
+    &:hover {
+        background: @btn-primary-color-disabled;
+    }
+}
+
+// 同类次级按钮
+.ant-btn-secondary {
+    border: 1px solid @border-color;
+    color: @black-color;
+
+    &:hover,
+    &:active {
+        background: @light-blue-color-background;
+        border: 1px solid @border-color;
+        color: @black-color;
+    }
+}
+
+// 同类次级按钮禁用
+.ant-btn-secondary-disabled,
+.ant-btn-secondary[disabled] {
+    border: 1px solid @border-color;
+    color: @light-gray-color;
+    background: #fff !important;
+
+    &:hover,
+    &:active {
+        border: 1px solid @border-color;
+        color: @light-gray-color;
+    }
+}
+
+// 主操作按钮
+.ant-btn-primary-next {
+    background: #fff !important;
+    color: @btn-primary-color;
+    border: 1px solid @light-blue-color;
+
+    &:hover {
+        background: @light-blue-color-background;
+    }
+}
+
+// 主操作按钮禁用
+.ant-btn-primary-next-disabled,
+.ant-btn-primary-next[disabled] {
+    background: #fff !important;
+    color: @btn-primary-color-disabled;
+    border: 1px solid @btn-primary-color-disabled;
+
+    &:hover {
+        background: #fff !important;
+    }
+}
+
+.small-btn {}
+
+// 输入区弹框选择
+.ant-btn-modal {
+    padding: 8px 40px !important;
+    border: none !important;
+    background: rgba(50, 112, 255, 0.06) !important;
+    color: @link-color;
+
+    &:hover {
+        color: @ant-btn-modal-hover;
+        background: rgba(84, 135, 255, 0.14) !important;
+    }
+}
+
+// 输入区弹框选择禁用
+.ant-btn-modal-disabled,
+.ant-btn-modal[disabled] {
+    padding: 8px 32px !important;
+    border: none !important;
+    background: rgba(50, 112, 255, .06) !important;
+    color: #ADC6FF !important;
+
+    &:hover {
+        background: rgba(50, 112, 255, .06) !important;
+        color: #ADC6FF !important;
+    }
+}

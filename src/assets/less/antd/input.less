@@ -1,0 +1,31 @@
+
+.ant-input-disabled {
+    border: 1px solid @border-color  !important;
+}
+// 可清除的文本框svg颜色调整
+.ant-input-affix-wrapper {
+    .anticon-close-circle {
+        svg {
+            color: @border-color;
+        }
+    }
+}
+.ant-input-search {
+    &:hover {
+        svg {
+            color: @black-color;
+        }
+    }
+
+    svg {
+        font-size: 16px;
+        color: @gray-color;
+
+    }
+}
+
+textarea.ant-input {
+    .textarea-style;
+    padding-top: 7px;
+
+}

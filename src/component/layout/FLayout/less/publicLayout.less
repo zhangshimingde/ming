@@ -1,0 +1,198 @@
+.workflow-container {
+    position: absolute;
+    top: 0;
+    padding-top: 10px;
+    bottom: 0;
+    left: 20px !important;
+    right: 20px !important;
+    background: #fff;
+    border-radius: 3px;
+}
+
+.workflow-container-header {
+    zoom: 1;
+    overflow: hidden;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.workflow-container-search {
+    float: left;
+}
+
+.workflow-container-search select {
+    background: white;
+}
+
+.workflow-container-cmd {
+    float: right;
+}
+
+.workflow-container-content {
+    margin-top: 20px;
+}
+
+/*antd样式重置*/
+
+.search-select,
+.search-input,
+.search-button {
+    float: left;
+}
+
+.workflow-container-search .search-select {
+    margin-right: 10px;
+}
+
+.workflow-container-search .search-input {
+    margin-right: 5px;
+    border-radius: 4px;
+}
+
+.workflow-container .ant-input:hover,
+.workflow-container .ant-input:focus {
+    border-color: #283444;
+}
+
+/*input*/
+
+.workflow-container .ant-btn {
+    border-radius: 3px;
+}
+
+/*分页*/
+
+.workflow-container .ant-pagination-item-active,
+.workflow-container .ant-pagination-item-active:hover {
+    border-color: rgb(40, 52, 68);
+}
+
+.workflow-container .ant-pagination-item-active a {
+    color: rgb(40, 52, 68);
+}
+
+.workflow-container .ant-pagination-item-active:hover a {
+    color: rgb(40, 52, 68);
+}
+
+.workflow-container .ant-table-pagination li,
+.workflow-container .ant-table-pagination li a {
+    border-radius: 3px;
+}
+
+.contentpage-body {
+    box-shadow: 0px 0px 2px 2px #e1e1e1;
+    position: absolute;
+    top: 115px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+}
+
+.contentpage-header {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    right: 20px;
+}
+
+.contentpage-header .contentpage-header-title:before {
+    content: ' ';
+    width: 2px;
+    display: inline-block;
+    height: 14px;
+    background: #283444;
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+}
+
+.contentpage-header .save-fav-icon {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.contentpage-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.ant-tree li .ant-tree-node-content-wrapper {
+    display: inline-block;
+    width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    word-break: normal !important;
+}
+
+.app-module-nav-side {
+    border: 1px solid #e8e8e8;
+    position: absolute;
+    top: 50px;
+    padding-left: 5px;
+    padding-top: 5px;
+    left: 0px;
+    min-height: 500px;
+    width: 260px;
+    border-radius: 5px;
+    &.thin {
+        width: 200px;
+        .ant-tree-node-content-wrapper {
+            width: 110px;
+        }
+    }
+    &.fat {
+        .ant-tree-node-content-wrapper {
+            width: 150px;
+        }
+    }
+}
+
+.app-module-nav-content {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-module-nav-right-content {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 280px;
+    right: 0px;
+}
+
+.ant-tree-node-content-wrapper {
+    padding: 0px !important;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0
+}
+
+.loading-wrapper {
+    position: relative;
+    height: 100%;
+    background: url(../images/loading.png) center no-repeat;
+    background-size: cover;
+    z-index: 999;
+}

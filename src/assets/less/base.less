@@ -1,0 +1,19 @@
+@import "./params.less";
+
+html, body, #app, .app, .sidebar {
+    height: 100%;
+}
+.container {
+  height: e('calc(100vh - 50px)') !important;
+  overflow-y: auto;
+}
+#app {
+    min-width: 1024px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+a {
+    &:focus {
+        text-decoration: none;
+    }
+}

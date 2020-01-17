@@ -1,0 +1,28 @@
+{
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false,
+          "useBuiltIns": true,
+          "loose": true,
+          "targets": {"browsers": ["safari >= 7", "ie>=9"]}
+        }
+      ],
+      "stage-0",
+      "react"
+    ],
+    "plugins": [
+      "dva-hmr",
+      // "add-module-exports",
+      "transform-runtime",
+      "transform-decorators-legacy",
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "style": "css"
+        }
+      ]
+    ]
+  }

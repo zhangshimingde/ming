@@ -1,0 +1,290 @@
+.top {
+    height: 64px;
+    // overflow: hidden;
+    .trigger {
+        float: left;
+        position: relative;
+        font-size: 18px;
+        line-height: 64px;
+        padding: 0 24px;
+        cursor: pointer;
+        transition: color .3s;
+        color: #9fa7ae;
+        &:hover{
+            background: #121b24;
+            color: #ffffff;
+        }
+    }
+
+    .inner-app {
+        float: left;
+        margin-left: 20px;
+        height: 100%;
+        
+        .btn {
+            &:hover {
+                color: #ffffff;
+            }
+            height: 100%;
+            padding: 20px 12px;
+            display: inline-block;
+            color: #9fa7ae;
+            font-size: 14px;
+            margin-right: 30px;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .bnt-select {
+            background: #3983d7;
+            color: #ffffff;
+        }
+    }
+    .userCenter {
+        font-family:PingFangSC-Medium,PingFang SC;
+        float: right;
+        color: #9fa7ae;
+        line-height: 64px;
+        .user-center-content {
+            width: 141px;
+            padding-right: 14px;
+            padding-left: 14px;
+            a {
+                cursor: pointer;
+                color: #fff;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+            .user-mobile {
+                .anticon-user {
+                    margin-right: 5px;
+                }
+            }
+            &:hover {
+                background: #081520;
+                .drop-down {
+                    display: block;
+                }
+            }
+            .drop-down {
+                position: absolute;
+                display: none;
+                width: 288px;
+                background: #081520;
+                right: 0;
+                z-index: 99;
+                // border-radius: 5px;
+                // border-top-left-radius: 0;
+                // border-top-right-radius: 0;
+                .balance-title {
+                    line-height: initial;
+                    margin-bottom: 10px;
+                    padding: 16px 16px 0;
+                }
+                .balance-box {
+                    line-height: initial;
+                    padding: 0 16px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .balance {
+                        font-size: 32px;
+                        max-width: 200px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                    .decimal {
+                        font-size: 18px;
+                    }
+                    button {
+                        padding: 0 9px;
+                    }
+                    .rmb-icon {
+                        font-size: 20px;
+                        margin-right: 3px;
+                    }
+                }
+                .link-box {
+                    border-top: 1px solid #838A8F;
+                    border-bottom: 1px solid #838A8F;
+                    margin-top: 20px;
+                    .half-l {
+                        float: left;
+                        width: 50%;
+                        text-align: center;
+                        height: 40px;
+                        line-height: 40px;
+                        & + .half-l {
+                            border-left: 1px solid #838A8F;
+                        }
+                        a {
+                            color: #fff;
+                        }
+                    }
+                    &:after {
+                        content: '';
+                        clear: both;
+                        display: table;
+                    }
+                }
+                .exit-box {
+                    line-height: 42px;
+                    text-align: center;
+                    background: #111E2A;
+                    // border-radius: 5px;
+                    // border-top-left-radius: 0;
+                    // border-top-right-radius: 0;
+                }
+            }
+        }
+        .uc-item {
+            position: relative;
+            display: inline-block;
+            color: inherit;
+            cursor: pointer;
+            &:hover {
+                color: #fff;
+            }
+        }
+        .msg-box {
+            padding: 0 20px 0 8px;
+            &:hover {
+                background: #081520;
+            }
+            .ant-badge {
+                margin-left: 8px;
+                margin-right: 0;
+                .ant-badge-count {
+                    box-shadow: none;
+                    min-width: 14px;
+                    height: 14px;
+                    line-height: 14px;
+                    padding: 0;
+                    // .ant-scroll-number-only {
+                    //     height: inherit;
+                    // }
+                }
+            }
+        }
+        .merchant-box {
+            min-width: 150px;
+            .merchant-name {
+                position: relative;
+                padding-left: 16px;
+                padding-right: 16px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                max-width: 200px;
+                display: inline-block;
+                line-height: 19px;
+                top: 4px;
+            }
+            &:after {
+                content: '';
+                position: absolute;
+                border: 4px solid transparent;
+                border-top-color: #9fa7ae;
+                top: 50%;
+                margin-top: -2px;
+                right: 7px;
+                transform-origin: center;
+                border-bottom: none;
+                transition: transform linear 200ms;
+            }
+            &:hover {
+                background: #081520;
+                .merchant-list {
+                    display: block;
+                }
+                &:after {
+                    border-top-color: #fff;
+                    transform: rotate(180deg);
+                }
+            }
+            .merchant-list {
+                position: absolute;
+                list-style: none;
+                display: none;
+                background: #081520;
+                z-index: 99;
+                right: 0;
+                left: 0;
+                border-radius: 5px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                li {
+                    line-height: 42px;
+                    padding-left: 16px;
+                    &:hover {
+                        background: #1890ff;
+                    }
+                }
+                a {
+                    color: #fff;
+                    // width: 110px;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+            ul, li {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .center-link {
+            color: inherit;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .ant-badge {
+            .anticon-bell {
+                font-size: 1.45em;
+                cursor: pointer;
+                transition: color 0.3s;
+                &:hover {
+                    color: #ececec;
+                }
+            }
+        }
+        .tel {
+            margin: 0 15px 0 7px;
+        }
+        .logout {
+            &:hover{
+                color: #ffffff;
+            }
+            cursor: pointer;
+        }
+        .balance {
+            display: inline-block;
+            cursor: pointer;
+        }
+        .merchant-manage-mobile {
+            &:hover {
+                color: #fff;
+            }
+        }
+        &>.logout {
+            margin-right: 18px;
+        }
+    }
+}
+
+@media screen and (max-width: 1632px) {
+    .top {
+        .userCenter {
+            margin-right: 8px;
+        }
+        .inner-app {
+            .btn {
+                margin-right: 20px;
+            }
+        }
+    } 
+}

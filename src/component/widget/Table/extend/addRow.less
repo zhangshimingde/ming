@@ -1,0 +1,42 @@
+.add-row-box {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    right: 0;
+    height: 40px;
+    line-height: 40px;
+    background-color: #edf3f9;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+    z-index: 1000;
+    &.scroll-hor {
+        .ant-form {
+            padding-top: 5px;
+        }
+    }
+    .add-btn {
+        margin-left: 40px;
+        color: #bdbdbd;
+        &:hover {
+            color: #9db6bb;
+        }
+    }
+    .ant-form {
+        padding-left: 42px;
+        padding-top: 10px;
+        .ant-btn-primary {
+            margin-right: 10px;
+        }
+    }
+    .ant-btn {
+        padding: 1px 6px !important;
+        height: 24px !important;
+    }
+}
+.fulu-table.small-table .add-row-box {
+    height: 30px;
+    line-height: 30px;
+    .ant-form {
+        padding-top: 4px;
+    }
+}

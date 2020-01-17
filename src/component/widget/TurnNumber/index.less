@@ -1,0 +1,67 @@
+.turn-box {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    margin: 10px;
+    font-size: 66px;
+    color: #fff;
+}
+.card .half-top, .card .half-bottom {
+    position: absolute;
+    background: #000;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    perspective: 160px;
+    transform-style: preserve-3d;
+}
+.card .half-top {
+    top: 0;
+    bottom: 50%;
+    transform-origin: bottom center;
+    border-radius: 5px 5px 0 0;
+}
+.card .half-bottom {
+    top: 50%;
+    bottom: 0;
+    line-height: 0;
+    transform-origin: top center;
+    border-radius: 0 0 5px 5px;
+    border-top: 1px solid #b7b7b7;
+}
+.card.next .half-top {
+    z-index: 1;
+}
+.card.next .half-bottom {
+    z-index: 2;
+    transform: rotateX(-180deg);
+}
+.card.cur .half-top {
+    z-index: 3;
+}
+.card.cur .half-bottom {
+    z-index: 1;
+}
+
+.runing .card.next .half-bottom {
+    animation: turnShow 600ms linear both;
+}
+
+.runing .card.cur .half-top {
+    backface-visibility: hidden;
+    animation: turnHide 600ms linear both;
+}
+
+@keyframes turnHide {
+    to {
+        transform: rotateX(180deg);
+    }
+}
+@keyframes turnShow {
+    to {
+        transform: rotateX(0deg);
+    }
+}

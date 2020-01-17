@@ -1,0 +1,77 @@
+// 弹框
+.ant-modal-title {
+    color: @black-color  !important;
+}
+
+.ant-modal-close-x {
+    width: 66px;
+
+    .anticon svg {
+        font-size: 14px !important;
+        color: @light-gray-color  !important;
+    }
+}
+
+.ant-modal-header {
+    border-bottom: none !important;
+    padding: 22px 30px 0px !important;
+
+    .ant-modal-title {
+        padding-bottom: 15px !important;
+        border-bottom: 1px solid @border-bottom-color !important;
+    }
+}
+
+.ant-modal-body {
+    padding: 20px 30px 12px !important;
+
+    .ant-modal-confirm-body-wrapper {
+        padding-top: 16px;
+
+        .ant-modal-confirm-body {
+            padding-bottom: 40px;
+            border-bottom: 1px solid @border-bottom-color;
+        }
+
+        .ant-modal-confirm-btns {
+            .ant-btn:not(.ant-btn-primary) {
+                border: 1px solid @border-color;
+                color: @black-color;
+
+                &:hover,
+                &:active {
+                    background: @light-blue-color-background;
+                    border: 1px solid @border-color;
+                    color: @black-color;
+                }
+            }
+        }
+
+    }
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns {
+    margin-top: 12px !important;
+}
+
+.ant-modal-footer {
+    padding: 0px 30px 12px !important;
+    border-top: none !important;
+
+    >div {
+        padding-top: 12px !important;
+        border-top: 1px solid @border-bottom-color !important;
+    }
+
+    .ant-btn:not(.ant-btn-primary) {
+        border: 1px solid @border-color;
+        color: @black-color;
+
+        &:hover,
+        &:active {
+            background: @light-blue-color-background;
+            border: 1px solid @border-color;
+            color: @black-color;
+        }
+    }
+}

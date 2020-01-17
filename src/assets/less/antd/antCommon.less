@@ -1,0 +1,72 @@
+// 常量
+@import '../params.less';
+@import './button.less';
+@import './checkbox.less';
+@import './datePicker.less';
+@import './form.less';
+@import './input.less';
+@import './message.less';
+@import './modal.less';
+@import './radio.less';
+@import './select.less';
+@import './tabs.less';
+@import './upload.less';
+// @import './spin.less';
+@import './breadcrumb.less';
+
+
+// 文本框高度重置
+.ant-input,
+.ant-select .ant-select-selection {
+    background: @input-background-color;
+    border: 1px solid @input-background-color;
+    .input-height;
+    .rounded-corners;
+    color: @normal-color;
+    padding: 0px !important;
+    padding-left: 10px !important;
+    caret-color: @btn-primary-color;
+
+    &:hover {
+        border: 1px solid @out-border-color;
+    }
+
+    .ant-select-selection__rendered {
+        .input-height;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+}
+
+// .ant-form-item-control-wrapper {
+//     .input-height;
+// }
+.has-error .ant-input,
+.has-error .ant-input:hover {
+    border: 1px solid @red-color  !important;
+}
+
+.has-error .ant-form-explain,
+.has-error .ant-form-split {
+    color: @red-color  !important;
+}
+
+
+// Spin
+
+.ant-spin-container::after {
+    // background: rgba(0, 15, 50, 1);
+    // opacity: 0.3;
+}
+
+// .ant-modal-confirm-info .ant-modal-confirm-body>.anticon {
+//     color: #1890ff;
+//     margin-top: 11px;
+//     margin-left: 15px;
+//     margin-right: 0px;
+
+//     svg {
+//         font-size: 16px;
+//     }
+// }

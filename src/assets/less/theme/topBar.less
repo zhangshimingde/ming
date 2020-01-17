@@ -1,0 +1,55 @@
+& .topbar {
+  color: @color !important;
+  background: @topbarBackground !important;
+  .user-center {
+    color: inherit;
+  }
+  .@{anole-prefix}-tabs {
+    &-tab {
+      color: @tabsItemColor !important;
+      background-color: @tabsItemBackgroundColor !important;
+      width: 146px;
+      span {
+        width: inherit;
+      }
+      .@{anole-prefix}-tabs-tab-collect {
+        color: @tabsCollectColor !important;
+        &.@{anole-prefix}-tabs-tab-collect-active {
+          color: @tabsCollectActiveColor !important;
+        }
+      }
+      .@{anole-prefix}-tabs-tab-close {
+        // background-color: @tabsCloseColor !important;
+        display: inherit !important;
+        &:hover {
+          background-color: @tabsCloseHoverColor !important;
+          svg {
+            background-color: rgba(0,0,0,0.2) !important;
+          }
+        }
+        &:active {
+          background-color: @tabsCloseActiveColor !important;
+        }
+      }
+      &:hover {
+        background-color: @tabsItemHoverBackgroundColor !important;
+      }
+      &-active {
+        color: @tabsItemActiveColor !important;
+        background-color: @tabsItemActiveBackgroundColor !important;
+        .@{anole-prefix}-tabs-tab-collect {
+          color: @tabsCloseActiveColor !important;
+        }
+        &:hover {
+          background-color: @tabsItemActiveBackgroundColor !important;
+        }
+      }
+      &-disabled {
+        color: @tabsItemDisabledColor;
+        &:hover {
+          background-color: @tabsItemDisabledBackgroundColor;
+        }
+      }
+    }
+  }
+}

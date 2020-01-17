@@ -1,0 +1,24 @@
+.ant-spin-spinning{
+    height: e('calc(100vh - 300px)') !important;
+    max-height: e('calc(100vh - 300px)') !important;
+    .ant-spin-dot-spin{
+        animation:indexend 0s; 
+        transform: rotate(0deg);
+        background: url(../../loading.gif);
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        i {
+            display: none;
+        }
+    }
+    .ant-spin-dot-item{
+        display: none;
+    }
+}
+.ant-spin-nested-loading>div>.ant-spin .ant-spin-dot {
+    position: absolute;
+    top: 50%;
+    // left: 45% !important;
+    margin: -50px !important;
+}

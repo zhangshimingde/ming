@@ -1,0 +1,99 @@
+.app {
+  &-dark {
+    @import "./theme/param/darkTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less"; 
+    #nprogress .bar {
+      background: #009cff;
+    }
+  }
+  &-red {
+    @import "./theme/param/redTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less"; 
+    #nprogress .bar {
+      background: #fff;
+    }
+    background: url('./theme/images/dandelion.jpg'); 
+    background-size: cover;
+    .app-list {
+      background: url('./theme/images/dandelion.jpg') 0 -50px; 
+      background-size: cover;
+    }
+  }
+  &-yellow {
+    @import "./theme/param/yellowTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less"; 
+    #nprogress .bar {
+      background: #ffd100;
+    }
+  }
+  &-light {
+    @import "./theme/param/lightTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less"; 
+    background: url('./theme/images/cat.jpg'); 
+    background-size: cover;
+    .app-list {
+      background: url('./theme/images/cat.jpg') 0 -50px; 
+      background-size: cover;
+    }
+  }
+  &-green {
+    @import "./theme/param/greenTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less"; 
+    background: url('./theme/images/green.jpg'); 
+    background-size: cover;
+    #nprogress .bar {
+        background: #00d26c;
+    }
+    .app-list {
+      background: url('./theme/images/green.jpg') 0 -50px; 
+      background-size: cover;
+    }
+  }
+  &-blue {
+    @import "./theme/param/blueTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less"; 
+    background: url('./theme/images/sky.jpg'); 
+    background-size: cover;
+    #nprogress .bar {
+        background: #fff;
+    }
+    .app-list {
+      background: url('./theme/images/sky.jpg') 0 -50px; 
+      background-size: cover;
+    }
+  }
+  &-purple {
+    @import "./theme/param/purpleTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less";
+    background: url('./theme/images/purple.jpg'); 
+    background-size: cover;
+    #nprogress .bar {
+        background: #5e617d;
+    }
+    .app-list {
+      background: url('./theme/images/purple.jpg') 0 -50px; 
+      background-size: cover;
+    }
+  }
+  &-pink {
+    @import "./theme/param/pinkTheme.less";
+    @import (multiple) "./theme/topBar.less"; 
+    @import (multiple) "./theme/sideBar.less";
+    background: url('./theme/images/bbt.jpg');
+    background-size: cover; 
+    #nprogress .bar {
+      background: #fff;
+    }
+    .app-list {
+      background: url('./theme/images/bbt.jpg'); 
+      background-size: cover;
+    }
+  }
+}

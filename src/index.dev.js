@@ -1,0 +1,29 @@
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+import dva from 'dva';
+import { message } from 'antd';
+import createHistory from 'history/createBrowserHistory';
+import PublicLayout from './model/PublicLayout';
+// import AppRouter from './router';
+
+// import 'babel-runtime/core-js/map';
+// import 'babel-runtime/core-js/set';
+import './assets/less/common.less';
+import './assets/less/antd/antCommon.less';
+
+// window.Promise = Promise;
+
+const history = createHistory();
+const app = dva({
+    history,
+    onError(e) {
+        message.error(e.message, 3);
+    },
+});
+app.model(PublicLayout);
+
+app.router(require('./router/RouterDev'));
+
+app.start('#app');
+
+// ReactDOM.render(<AppRouter />, document.querySelector('#app'));

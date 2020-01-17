@@ -1,0 +1,45 @@
+// form
+.ant-form {
+    .ant-form-item {
+        .ant-form-item-label {
+            height: @input-height;
+
+            label {
+                color: @gray-color;
+            }
+        }
+    }
+}
+
+.ant-form-item-label {
+    .input-height;
+}
+
+.ant-form-item-label>label::after {
+    content: '' !important;
+    position: relative !important;
+    top: -0.5px !important;
+}
+
+.label-text {
+    color: @black-color;
+    .ant-form-item-label>label::after {
+        content: '' !important;
+        position: relative !important;
+        top: -0.5px !important;
+    }
+}
+
+.ant-form-item-children {
+    input {
+        .rounded-corners;
+    }
+}
+
+.ant-form-item-control {
+    line-height: @input-height;
+
+    .ant-form-explain {
+        margin-top: 2px;
+    }
+}

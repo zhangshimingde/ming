@@ -1,0 +1,287 @@
+.sidebar-box {
+  position: relative;
+  float: left;
+  z-index: 2;
+  width: 50px;
+  height: 100%;
+  background-color: #283444;
+  color: #fff;
+  .sidebar-header {
+    line-height: 50px;
+    margin-right: -180px;
+    background-color: #283444;
+    .logo {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      background-image: url('../images/logo.png');
+      background-size: cover;
+      vertical-align: middle;
+      margin-left: 15px;
+      animation: rotateLogo 24s linear infinite both;
+    }
+    .company-dropdown-link {
+      color: #fff;
+      margin-left: 20px;
+      .company-name {
+        display: inline-block;
+        width: 128px;
+        line-height: 20px;
+        margin-left: 12px;
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 1px;
+      }
+    }
+    .current-project-name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      vertical-align: middle;
+      & + .anticon {
+        vertical-align: middle;
+      }
+    }
+    .show-company-name {
+      display: inline-block;
+      max-width: 135px;
+      line-height: 20px;
+      text-align: center;
+      margin-left: 25px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+  }
+  .app-list {
+    position: relative;
+    z-index: 2;
+    width: inherit;
+    background: inherit;
+    background-position-x: 0;
+    height: 100%;
+    margin-bottom: -50px;
+    transition: all 0.3s;
+    &:hover {
+      width: 230px;
+    }
+    .app-item {
+      background-color: inherit;
+      white-space: nowrap;
+      overflow: hidden;
+      height: 40px;
+      line-height: 40px;
+      font-size: 0;
+      &.active {
+        background-color: #1684ff;
+      }
+      &:hover {
+        background-color: #192129;
+        .app-name {
+          color: #00c1de;
+          transform: translateX(5px);
+        }
+      }
+      .icon-box {
+        display: inline-block;
+        width: 50px;
+        text-align: center;
+        font-size: 0;
+        .icon {
+          font-size: 16px;
+          line-height: inherit;
+          height: 40px;
+          vertical-align: middle;
+          svg {
+            vertical-align: sub;
+          }
+        }
+        object {
+          position: relative;
+          top: 8px;
+        }
+      }
+      .app-link {
+        text-decoration: none;
+        line-height: 40px;
+        font-size: 0;
+        .app-name {
+          display: inline-block;
+          vertical-align: middle;
+          width: 180px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          color: #fff;
+          font-size: 12px;
+          padding-left: 3px;
+          padding-right: 8px;
+          transition: all 0.2s ease-in;
+        }
+      }
+    }
+  }
+  .app-menu-box {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    bottom: 0;
+    width: 180px;
+    color: #000;
+    z-index: 1;
+    transition: all 0.3s;
+    .menu-header {
+      height: 70px;
+      line-height: 70px;
+      background-color: #d9dee4;
+      padding-left: 20px;
+    }
+    .ant-tree {
+      position: relative;
+      .ant-tree-treenode-selected {
+        &>span>.ant-tree-switcher-icon {
+          color: #fff;
+        }
+      }
+      .ant-tree-treenode-selected {
+        &>span.ant-tree-switcher {
+          &+span:after {
+            border-top-color: #fff;
+          }
+        }
+      }
+    }
+    .ant-tree li {
+      padding: 0;
+      line-height: 40px;
+      .ant-tree-node-content-wrapper {
+        height: 40px;
+        width: initial !important;
+        line-height: inherit;
+        overflow: visible !important;
+        border-radius: 0!important;
+        font-size: 12px;
+        color: #5a5a5a;
+        &:before {
+          content: '';
+          position: absolute;
+          right: 0;
+          left: 0;
+          height: 40px;
+          background-color: transparent;
+          -webkit-transition: all .3s;
+          transition: all .3s;
+        }
+        .ant-tree-title {
+          position: relative;
+          z-index: 1;
+        }
+      }
+      span.ant-tree-switcher {
+        visibility: hidden;
+        background: transparent;
+        user-select: none;
+        &+span:after {
+          content: '';
+          position: relative;
+          border: 5px solid transparent;
+          border-top-color: #595959;
+          line-height: 0;
+          width: 0;
+          height: 0;
+          font-size: 0;
+          top: 18px;
+          z-index: 0;
+          transform: rotate(-90deg);
+          transform-origin: 5px 2.5px;
+          transition: transform 0.3s ease-in;
+          float: left;
+          // margin-right: 10px;
+          // margin-left: -10px;
+          margin-right: 4px;
+          margin-left: -14px;
+        }
+        &.ant-tree-switcher_open+span:after {
+          transform: rotate(0deg);
+        }
+        .ant-tree li span.ant-tree-iconEle {
+          height: 40px;
+          line-height: inherit;
+          z-index: 2;
+          visibility: hidden;
+        }
+        &.ant-tree-switcher-noop+span {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #d4d4d4;
+  }
+  .thumb-vertical {
+    position: relative;
+    display: block;
+    width: 4px!important;
+    left: 2px;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 45px;
+  }
+  .thumb-horizontal {
+    position: relative;
+    display: block;
+    height: 4px!important;
+    top: 2px;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 0px;
+  }
+}
+
+.fl-project-list {
+  // padding-bottom: 0;
+  .project-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:hover {
+      .anticon-pushpin {
+        display: inline-block;
+      }
+    }
+  }
+  .link-project-list {
+    border-radius: 4px;
+  }
+  .link-project-list, .link-create-project {
+    a {
+      border-top: 1px solid #E8E8E8;
+    }
+  }
+  .anticon-pushpin {
+    color: #BFBFBF;
+    font-size: 10px;
+    display: none;
+  }
+}
+
+@keyframes rotateLogo {
+  0% {
+    transform: rotateY(0);
+  }
+  95% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}

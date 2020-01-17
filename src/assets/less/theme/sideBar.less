@@ -1,0 +1,121 @@
+& .sidebar-box {
+  background: @topbarBackground !important;
+  .sidebar-header {
+    line-height: 50px;
+    margin-right: -180px;
+    background: @topbarBackground !important;
+    .show-company-name {
+      color: @companyColor !important;
+    }
+    .company-name {
+      .icon {
+        color: @companyColor !important;
+      }
+    }
+  }
+  .search-wrapper {
+    .anticon-search {
+      color: @foldColor !important;
+    }
+    .ant-select-selection {
+      color: @searchColor;
+      background-color: @searchBackgroundColor !important;
+      border-color: @searchBorderColor !important;
+      &::placeholder {
+        color: @searchPlaceholderColor !important;
+      }
+      &:hover {
+        border-color: @searchHoverBorderColor !important;
+      }
+      &:active,
+      &:focus {
+        border-color: @searchActiveBorderColor !important;
+      }
+      .ant-select-selection__placeholder {
+        color: @searchPlaceholderColor !important;
+      }
+    }
+    .icon {
+      color: @searchIconColor !important;
+    }
+  }
+  .app-list {
+    .app-item {
+      color: @menuColor;
+      .icon {
+          color: @foldColor;
+      }
+      .app-name {
+        color: @appNameColor;
+      }
+      &:hover {
+        background-color: @foldHoverBackgroundColor;
+        .icon {
+            color: @foldHoverColor;
+        }
+        .app-name {
+          color: @appNameColor;
+        }
+      }
+      &.active {
+        background-color: @foldActiveBackgroundColor;
+        .icon {
+            color: @foldActiveColor;
+        }
+        .app-name {
+          color: @appNameColor;
+        }
+      }
+    }
+  }
+  .toggle {
+    svg {
+      color: @background;
+    }
+  }
+  .app-menu-box {
+    .ant-tree li {
+      .ant-tree-node-content-wrapper {
+        transition: none;
+      }
+      .ant-tree-node-content-wrapper.ant-tree-node-selected {
+        background-color: @selectedBackground!important;
+        color: #fff !important; 
+      }
+      .ant-tree-node-content-wrapper.ant-tree-node-selected:before {
+        background-color: @selectedBackground!important;
+      }
+    }
+    .ant-tree-node-content-wrapper:hover {
+      background-color: #f1f4f8;
+      &:before {
+        background-color: #f1f4f8;
+      }
+    }
+    .ant-tree>li>.ant-tree-child-tree>li>.ant-tree-child-tree .ant-tree-child-tree {
+      color: #666666;
+      span {
+        color: inherit;
+        background-color: transparent;
+        &:hover {
+          :before {
+            background-color: #f1f4f8 !important;
+          }
+        }
+      }
+      .ant-tree-node-content-wrapper:before {
+        background-color: transparent;
+        transition: none;
+      }
+      & li:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background-color: #d9dee4;
+        z-index: 0;
+      }
+    } 
+  }
+}
