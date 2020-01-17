@@ -1,4 +1,4 @@
-# 福禄管家公共组件库
+# 公共组件库
 
 ## 1.版本发布信息
 
@@ -83,9 +83,9 @@
 </ul>
 
 
-## 3.使用说明
+<!-- ## 3.使用说明 -->
 
-1.公共库
+<!-- 1.公共库
 
 npm --registry http://10.0.1.244:8081/repository/npm-group/ install fl-pro --save (初次安装)
 
@@ -96,19 +96,19 @@ npm --registry http://10.0.1.244:8081/repository/npm-group/ update fl-pro (更�
 
 npm --registry http://10.0.1.244:8081/repository/npm-group/ install -g fulu-cli (初次安装)
 
-npm --registry http://10.0.1.244:8081/repository/npm-group/ update fulu-cli (更新版本)
+npm --registry http://10.0.1.244:8081/repository/npm-group/ update fulu-cli (更新版本) -->
 
 
-命令行说明
+<!-- 命令行说明 -->
 
-fulu -c PageName // 创建PageName页面及其modal,service,完成路由注册
+<!-- fulu -c PageName // 创建PageName页面及其modal,service,完成路由注册
 
 fulu ProjectName // 生成ProjectName项目脚手架
 
 3.公用函数
 npm --registry http://10.0.1.244:8081/repository/npm-group/ install fulu-method --save (初次安装)
 
-npm --registry http://10.0.1.244:8081/repository/npm-group/ update fulu-method (更新版本)
+npm --registry http://10.0.1.244:8081/repository/npm-group/ update fulu-method (更新版本) -->
 
 ## 4.旧项目改造注意事项
 
