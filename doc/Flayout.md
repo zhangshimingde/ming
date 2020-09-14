@@ -17,6 +17,7 @@ import { fulu as Flayout } from 'fl-pro';
 |autoFoldUnclickMenu|是否自动折叠未点击的一级菜单，设置为true，只有当前选中的一级菜单才会展开，默认为false |boolean          |
 |autoOpenFirstMenu|点击一级菜单时是否默认打开该一级菜单下的第一个二级菜单，默认为false           |boolean           |
 |menuBradgeLoop|菜单显示额外数据的查询接口是否轮询，默认为true|boolean|
+|pollingTime|菜单轮询时间间隔，默认30s|number|
 |menuBradges|菜单显示额外数据的映射字典，同时可以通过onSetPollingTime设置轮询接口的间隔时间，目前仅支持客服系统和pop系统          |object           |
 |menuBradgeUrl|查询菜单额外数据的接口地址，请求方式get，没有请求参数，这里请指定完整的接口地址(不能是相对地址)，且接口返回结构：{ code: '0', data: { xx: 20 } }        |string           |
 |JoinTeamZone|协作者自定义渲染视图|ReactNode|
@@ -40,9 +41,9 @@ instance.interceptors.response.use(function (response) {
 ...
 
 
-2.商户控制台获取商户信息和余额调整
+2.商户控制台获取其他属性
 
-fulu组件以前的版本将Finance和merchantInfo数据直接挂在window对象上，导致子组件不能实时获取最新数据，现将数据通过Context传递，从而解决该问题(Finance修改成financeInfo)，onSetPollingTime用来设置菜单查询接口的轮询间隔时间，默认3000ms：
+fulu组件以前的版本将Finance和merchantInfo数据直接挂在window对象上，导致子组件不能实时获取最新数据，现将数据通过Context传递，从而解决该问题(Finance修改成financeInfo)，onSetPollingTime用来设置菜单查询接口的轮询间隔时间，默认3000ms，returnMerchantZone方法用来返回商户管理区：
 
 ...
 
@@ -54,7 +55,7 @@ render() {
 
         {
 
-            ({ financeInfo, merchantInfo, merchantList, onSetPollingTime }) => {
+            ({ financeInfo, merchantInfo, merchantList, onSetPollingTime, returnMerchantZone }) => {
 
                 return (......);
 

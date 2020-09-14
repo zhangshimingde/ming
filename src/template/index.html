@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- <link rel="stylesheet" type="text/css" href="http://common.unti.fulu.com/fulu.min.v1.2.css"> -->
-    <script>
+
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <!-- <link rel="stylesheet" type="text/css" href="http://common.unti.fulu.com/fulu.min.v1.2.css"> -->
+  <script>
     // 本地开发环境
     // var configs = {
     //   name: 'Steward.Web',
@@ -21,6 +22,7 @@
     //       'authCode': 'http://dev.steward.k8s.ichnb.com', //使用code换取access_token
     //       'auth': 'http://dev.ids.k8s.ichnb.com' // 通行证登录页 登录成功后会带上code跳转到回调地址
     //     },
+    //     monitorHost: 'https://fulu-beacontower.development.k8s.suuyuu.cn',
     //     userCenter : 'http://10.0.0.96:8090',
     //     common: 'http://dev.steward.k8s.ichnb.com', //左侧导航和头部导航 福禄管家通用接口
     //     log: 'http://dev.log.k8s.ichnb.com', //日志管理 接口
@@ -28,30 +30,59 @@
     //     webapi: 'http://dev.openplatform.k8s.ichnb.com' //新接口的地址
     //   }
     // };
+    // var configs = {
+    //   name: 'rdms',
+    //   version: '1.0.0',
+    //   productName: '福禄研发管理平台',
+    //   productVersion: 'X1',
+    //   clientId: '10000160',
+    //   authorId: '10000160',
+    //   host: {
+    //       passport: {
+    //         'getUserInfo': 'http://dev.passportcore.k8s.ichnb.com', //获取用户信息，判断用户是否登录
+    //         'authCode': 'http://rdms.k8s.ichnb.com', //使用code换取access_token
+    //         'auth': 'http://dev.ids.k8s.ichnb.com' // 通行证登录页 登录成功后会带上code跳转到回调地址
+    //       },
+    //       userCenter: 'http://10.0.0.96:8090', // 通行证前端站点地址
+    //       common: 'http://dev.steward.k8s.ichnb.com', //左侧导航和头部导航 福禄管家通用接口
+    //       apiHost: 'http://rdms.k8s.ichnb.com',
+    //       webapi: 'http://dev.openplatform.k8s.ichnb.com', //新接口的地址
+    //       monitorHost: 'http://fulu-beacontower.development.k8s.suuyuu.cn',
+    //   }
+    // };
+    // export default configs;
     var configs = {
-        name: 'rdms',
-        version: '1.0.0',
-        productName: '福禄研发管理平台',
-        productVersion: 'X1',
-        clientId: '10000160', //通行证使用的appid(一般与appid保持一致，目前只有erp的与appid不一样)
-        authorId: '10000160', //当前应用对应的appid
-        accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjE3OEJBNEJGMDZGQzkzMDY1QUEyNTgyRjU1QzcyMkE2IiwiY2xpZW50X2lkIjoiMTAwMDAwMDMiLCJuYW1lIjoiODAwMSIsIm5pY2tuYW1lIjoi56ym54aZIiwicGhvbmVfbnVtYmVyIjoiMTg2MjcxMTU2NTciLCJlbWFpbCI6Ijc3NTE0NTU0QHFxLmNvbSIsInJvbGUiOiJVc2VyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoxNTMxIiwiYXVkIjoiYXBpIiwiZXhwIjoxNTIxNzcyNDYxLCJuYmYiOjE1MTY1ODg0NjF9.cfYs3h1KmMdExHPNevec1s2CLOSEcAuN1aIXiTiouhc',
-        iframeIndex: 'http://10.0.0.135:10009/Home/Home', // OA3.0迁移项目的首页
-        host: {
-            passport: {
-              'getUserInfo': 'http://dev.passportcore.k8s.ichnb.com', //获取用户信息，判断用户是否登录
-              'authCode': 'http://rdms.k8s.ichnb.com', //使用code换取access_token
-              'auth': 'http://dev.ids.k8s.ichnb.com' // 通行证登录页 登录成功后会带上code跳转到回调地址
-            },
-            userCenter: 'http://10.0.0.96:8090', // 通行证前端站点地址
-            common: 'http://dev.steward.k8s.ichnb.com', //左侧导航和头部导航 福禄管家通用接口
-            apiHost: 'http://rdms.k8s.ichnb.com',
-            webapi: 'http://dev.openplatform.k8s.ichnb.com' //新接口的地址
-        }
+      name: 'Steward.Web',
+      version: '1.0.0-beta.0',
+      productName: '福禄管家-系统总管',
+      productVersion: 'X1',
+      clientId: '10000201', //通行证使用的appid(一般与appid保持一致，目前只有erp的与appid不一样)
+      authorId: '10000201', //当前应用对应的appid
+      accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjE3OEJBNEJGMDZGQzkzMDY1QUEyNTgyRjU1QzcyMkE2IiwiY2xpZW50X2lkIjoiMTAwMDAwMDMiLCJuYW1lIjoiODAwMSIsIm5pY2tuYW1lIjoi56ym54aZIiwicGhvbmVfbnVtYmVyIjoiMTg2MjcxMTU2NTciLCJlbWFpbCI6Ijc3NTE0NTU0QHFxLmNvbSIsInJvbGUiOiJVc2VyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoxNTMxIiwiYXVkIjoiYXBpIiwiZXhwIjoxNTIxNzcyNDYxLCJuYmYiOjE1MTY1ODg0NjF9.cfYs3h1KmMdExHPNevec1s2CLOSEcAuN1aIXiTiouhc',
+
+      host: {
+        passport: {
+          'getUserInfo': 'https://it-api-passport.suuyuu.cn',//找通行证拿用户信息
+          'auth': 'https://it-passport.suuyuu.cn',// 找通行证拿code
+          // 'authCode': 'http://10.0.1.106:9527', //根据code找业务线拿token ( 后端联调地址 )  http://10.0.1.46:5000
+          // 'authCode': 'http://logistics-antdaomanage-webapi.development.k8s.suuyuu.cn',//根据code找业务线拿token ( 后端联调地址 )  http://10.0.1.46:5000
+          'authCode': 'http://logistics-antdaomanage-webapi.beta.k8s.suuyuu.cn',//根据code找业务线拿token ( 后端联调地址 )  http://10.0.1.46:5000
+        },
+        userCenter: 'https://it-cas.suuyuu.cn',
+        webapi: 'https://it-openplateform.suuyuu.cn',//开发平台接口
+        common: 'https://it-steward.suuyuu.cn',//左侧导航和头部导航 福禄管家通用接口
+        log: 'http://10.0.0.189:10090',
+
+        // baseurl: 'http://10.0.1.106:9527', // 联调 ( 后端联调地址 )  http://10.0.1.106:5002
+        baseurl: 'http://logistics-antdaomanage-webapi.beta.k8s.suuyuu.cn', // 联调 ( 后端联调地址 )
+        // baseurl: 'http://dev.business-logistics.k8s.ichnb.com', // 小强( 后端联调地址 ) 
+        // baseurl:'http://pre.manage.robot.api-admin.suuyuu.cn', //pre
+      }
     };
-    </script>
-  </head>
-  <body>
-      <div id="app" style="height: 100%;"></div>
-  </body>
+  </script>
+
+<body>
+  <div id="app" style="height: 100%;"></div>
+</body>
+
 </html>

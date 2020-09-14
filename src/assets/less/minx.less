@@ -1,0 +1,169 @@
+.fl-ant-btn() {
+    color: @fontColor;
+    height: @primaryHeight;
+    min-width: @primaryMinWidth;
+    padding-left: @basePadding;
+    padding-right: @basePadding;
+    border-color: @borderColor;
+    &:not([disabled]) {
+        &:hover {
+            background: @normalHoverColor;
+            color: @fontColor;
+            border-color: @borderColor;
+        }
+        &:active, &:focus {
+            background: @normalActiveColor;
+            color: @fontColor;
+            border-color: @borderColor;
+        }
+    }
+    &+.ant-btn {
+        margin-left: @btnMargin;
+    }
+    &[disabled] {
+        background: transparent !important;
+        color: @disabledColor !important;
+        border-color: @disabledColor !important;
+    }
+    &.ant-btn-sm {
+        height: @primarySmallHeight;
+    }
+}
+.fl-ant-primary-btn() {
+    color: #fff;
+    background: @primaryColor;
+    border-color: @primaryColor;
+    &:not([disabled]) {
+        &:hover, &:focus {
+            background: @primaryHoverColor;
+            border-color: @primaryHoverColor;
+            color: #fff;
+        }
+        &:active {
+            color: #fff;
+            background: @primaryActiveColor;
+            border-color: @primaryActiveColor;
+        }
+    }
+    &[disabled] {
+        background: @primaryDisableColor !important;
+        border-color: @primaryDisableColor !important;
+        color: #fff !important;
+    }
+}
+.fl-ant-danger-btn() {
+    color: #fff;
+    &:not([disabled]) {
+        background: @dangerFontColor;
+        border-color: @dangerFontColor;
+        &:hover {
+            background-color: @dangerColor;
+            border-color: @dangerColor;
+            color: #fff;
+        }
+        &:active, &:focus {
+            color: @dangerFontColor;
+            background-color: @dangerActiveColor;
+            border-color: @dangerActiveColor;
+        }
+    }
+    &[disabled] {
+        color: @dangerDisableColor !important;
+        background: @dangerDisableBgColor !important;
+        border-color: @dangerDisableBgColor !important;
+    }
+}
+.fl-ant-ghost-danger-btn() {
+    border-color: @dangerColor;
+    color: @dangerFontColor;
+    &:not([disabled]) {
+        background: @dangeBgColor !important;
+        &:hover {
+            background-color: @dangerHoverColor !important;
+            border-color: @dangerHoverColor;
+            color: @dangerFontColor;
+        }
+        &:active, &:focus {
+            color: @dangerFontColor;
+            background-color: @dangerActiveColor !important;
+            border-color: @dangerActiveColor;
+        }
+    }
+    &[disabled] {
+        background: @dangerDisableBgColor !important;
+        color: @dangerDisableColor !important;
+        border-color: @dangerDisableBorderColor !important;
+    }
+}
+.fl-ant-link-btn() {
+    border-color: transparent;
+    background: transparent;
+    color: @primaryColor;
+    &:not([disabled]) {
+        &:hover, &:focus {
+            border-color: transparent;
+            color: #46A6FF;
+            background: transparent;
+            span {
+                text-decoration: underline;
+            }
+        }
+        &:active {
+            border-color: transparent;
+            color: #0080FF;
+            background: transparent;
+            text-decoration: underline;
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+    &[disabled] {
+        color: @disabledColor !important;
+        border-color: transparent !important;
+    }
+}
+.fl-ant-ghost-primay-btn() {
+    color: @primaryColor;
+    background-color: transparent;
+    border-color: @primaryColor;
+    text-shadow: none;
+    &:not([disabled]) {
+        &:hover {
+            color: @primaryColor;
+            background: @ghostHoverColor !important;
+            border-color: @ghostHoverColor !important;
+        }
+        &:active, &:focus {
+            background: @ghostActiveColor !important;
+            border-color: @ghostActiveColor !important;
+            color: #0080FF;
+        }
+    }
+    &[disabled] {
+        color: @primaryDisableColor !important;
+        background-color: transparent !important;
+        border-color:  @primaryDisableColor !important;
+    }
+}
+
+.btnStyle() {
+    .ant-btn {
+        .fl-ant-btn;
+    }
+    .ant-btn-primary {
+       .fl-ant-primary-btn;
+    }
+    .ant-btn-danger {
+        .fl-ant-danger-btn;
+    }
+    .ant-btn-background-ghost.ant-btn-danger {
+        .fl-ant-ghost-danger-btn;
+    }
+    .ant-btn-link {
+        .fl-ant-link-btn;
+    }
+    .ant-btn-background-ghost.ant-btn-primary {
+      .fl-ant-ghost-primay-btn;
+    }
+}

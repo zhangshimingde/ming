@@ -12,12 +12,16 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import classNames from 'classnames';
 import { LocaleProvider, message } from 'antd';
 import NProgress from 'nprogress';
-import { AsideMenu } from '../../menu';
-import { Tabs, Loading } from '../../widget';
+import AsideMenu from '../../menu/AsideMenu';
+import Tabs from '../../widget/Tabs';
+import WebMonitor from '../../widget/WebMonitor';
+import Loading from '../../widget/Loading';
 import TabComponent from './TabComponent';
-import { ContentPage } from '../../page';
+import ContentPage from '../../page/ContentPage';
 import UserCenter from './UserCenter';
-import { auth, isFullscreen, checkSubRoutePath, isPathEqual } from '../../../utils';
+import { auth, isFullscreen, checkSubRoutePath,
+  isPathEqual, exitFullScreen, fullScreen } from '../../../utils';
+// import getTime from '../../../utils/Common';
 import { Service } from '../../../annotation';
 import 'nprogress/nprogress.css';
 import './less/flayout.less';
@@ -27,6 +31,11 @@ const FLayoutContext = React.createContext({
   toggleAppVisable: () => { },
   basicInfo: {},
 });
+
+const IndexMenu = {
+  fullName: '首页',
+  urlAddress: '/',
+};
 
 NProgress.configure({
   parent: '#app',
@@ -47,25 +56,30 @@ class FLayout extends React.Component {
       globalLoading: false,
       menuLoading: false,
       authLoading: false,
-      projectLoading: false,
+      fetchComUseAppLoading: false,
       apps: [],
       menus: [],
       favs: [], // 收藏列表
       userOrganizeId: '', // 当前用户组织机构编号
       currentMenu: {}, // 当前选中菜单
-      currentProject: null,
-      projectList: [],
+      currentComUseApp: null,
+      commonUseAppList: [],
     };
+    this.isCollectDefaultPath = false; // 收集应用初次打开的路由信息的标识
     this.visableChangeApp = {};
-    this.onTopProject = this.onTopProject.bind(this);
-    this.onSwitchProject = this.onSwitchProject.bind(this);
+    this.onCancelComUseApp = this.onCancelComUseApp.bind(this);
+    this.onSwitchComUseApp = this.onSwitchComUseApp.bind(this);
     this.handleUpdateFavs = this.handleUpdateFavs.bind(this);
     this.fetchAsideMenuCb = this.fetchAsideMenuCb.bind(this);
-    this.fetchProjectList = this.fetchProjectList.bind(this);
+    this.fetchCommonUseAppList = this.fetchCommonUseAppList.bind(this);
     this.handleSetAppMenus = this.handleSetAppMenus.bind(this);
     this.handleSetActiveMenu = this.handleSetActiveMenu.bind(this);
     this.handleToggleAppVisable = this.handleToggleAppVisable.bind(this);
     this.handleSetUserOrganizeId = this.handleSetUserOrganizeId.bind(this);
+    window.handleFullContentToScreen = this.handleFullContentToScreen;
+    if (window.monitorOpen) {
+      WebMonitor.start(window.monitorConfig);
+    }
   }
   /* 登录逻辑
     1.跳转到登录页
@@ -98,12 +112,38 @@ class FLayout extends React.Component {
     this.handleLoadingStatus();
   }
   /**
+   * @desc 发送路由切换埋点数据
+   * @param {*} pathname 
+   * @param {*} menu 
+   */
+  sendOpenMenuData(pathname, menu = null) {
+    const { currentMenu, authCode } = this.state;
+    if (!authCode || !menu) {
+      return;
+    }
+    let prePageData = null;
+    if (this.disActiveMenu) {
+      prePageData = Object.assign({}, this.activeMenu);
+      this.disActiveMenu = null;
+    } else if (this.deleteMenu) {
+      prePageData = Object.assign({}, this.deleteMenu);
+      this.deleteMenu = null;
+    }
+    if (menu && currentMenu && menu.urlAddress !== currentMenu.urlAddress) {
+      prePageData = currentMenu;
+    }
+    if (prePageData && prePageData.urlAddress === '/' && !prePageData.fullName) {
+      prePageData = IndexMenu;
+    }
+    WebMonitor.sendPageView(menu, prePageData);
+  }
+  /**
    * @desc 添加默认欢迎页面
    */
   initDefaultPage() {
     const payload = {
       pathname: '/',
-      currentMenu: { urlAddress: '/', fullName: '首页' },
+      currentMenu: IndexMenu,
     }
 
     if (React.homePage) {
@@ -147,8 +187,8 @@ class FLayout extends React.Component {
       this.setState({
         userInfo: data,
       });
-      if (window.configs.clientId === '10000160') { // 项目研发管理平台，不切换公司主体，而是切换项目
-        this.fetchProjectList();
+      if (window.configs.clientId === '10000160') { // 项目研发管理平台，不切换公司主体，而是切换应用
+        this.fetchCommonUseAppList(); // 查询常用应用列表
       }
     }).catch(() => {
       localStorage.setItem('access_token', '');
@@ -159,70 +199,77 @@ class FLayout extends React.Component {
     this.setState({
       ...datas,
     });
+    if (!this.isSendPerformance) {
+      WebMonitor.sendPerformance();
+      this.isSendPerformance = true;
+    }
   }
-  async fetchProjectList() {
+  /**
+   * @desc 获取常用应用列表
+   */
+  async fetchCommonUseAppList() {
     this.setState({
-      projectLoading: true,
+      fetchComUseAppLoading: true,
     });
     try {
-      const { data: projectData } = await this.props.service.fetchProjectList();
-      const projectList = projectData && Array.isArray(projectData.list) ? projectData.list : [];
-      const { currentProject: cp } = this.state;
+      const { data: commonUseAppData } = await this.props.service.fetchCommonUseAppList();
+      const commonUseAppList = commonUseAppData && Array.isArray(commonUseAppData.list) ? commonUseAppData.list : [];
+      const { currentComUseApp: cp } = this.state;
+      let currentComUseApp = cp;
+      if (!cp && Array.isArray(commonUseAppList)) { // 默认第一个应用选中
+        currentComUseApp = commonUseAppList[0];
+      };
       this.setState({
-        projectList,
-        projectLoading: false,
-        currentProject: cp ? cp : Array.isArray(projectList) && projectList.length > 0 ? projectList[0] : null,
+        commonUseAppList,
+        fetchComUseAppLoading: false,
+        currentComUseApp,
       });
     } catch(e) {
       this.setState({
-        projectList: [],
-        projectLoading: false,
-        currentProject: null,
+        commonUseAppList: [],
+        fetchComUseAppLoading: false,
+        currentComUseApp: null,
       });
     }
   }
   /**
-   * @desc 置顶项目
+   * @desc 切换选中的常用应用
+   * @param {object} item
    */
-  async onTopProject(projectObj) {
+  onSwitchComUseApp(item) {
+    const { currentComUseApp } = this.state;
+    if (currentComUseApp && currentComUseApp.id === item.id) {
+      return;
+    }
     this.setState({
-      projectLoading: true,
+      currentComUseApp: item,
+    }, () => {
+      message.success(`切换至应用${item.name}`);
     });
+  }
+  async onCancelComUseApp(item) {
     try {
-      const response = await this.props.service.topProject({projectId: projectObj.id, sortId: 0});
+      const response = await this.props.service.onCancelComUseApp({ projectId: item.id });
       if (response) {
         if (response.code === '0') {
-          message.success('项目置顶成功');
-          const { projectList = [] } = this.state;
-          projectObj.sortId = 0;
-          const newProjectList = [projectObj].concat(projectList.reduce((arr, item) => {
-            if (item.id !== projectObj.id) {
-              arr.push(item);
+          message.success('取消成功');
+          const { commonUseAppList = [] } = this.state;
+          const newCommonUseAppList = commonUseAppList.reduce((arr, a) => {
+            if (a.id !== item.id) {
+              arr.push(a);
             }
             return arr;
-          }, []));
+          }, []);
           this.setState({
-            projectList: newProjectList,
-            projectLoading: false,
+            commonUseAppList: newCommonUseAppList,
           });
-          return;
+          return response;
         } else if (response.message) {
           message.error(response.message);
         }
       }
-      this.setState({
-        projectLoading: false,
-      });
     } catch(e) {
-      this.setState({
-        projectLoading: false,
-      });
     }
-  }
-  onSwitchProject(project) {
-    this.setState({
-      currentProject: project,
-    });
   }
   componentDidMount() {
     this.initDefaultPage();
@@ -248,6 +295,17 @@ class FLayout extends React.Component {
       // 当前路由没有加入到tabs
       if (!~_index) {
         this.handleAddTabPage(this.props, currentMenu);
+      }
+      const pathname = location.pathname;
+      if (window.monitorOpen && !this.isCollectDefaultPath) { // 开启了埋点收集功能，但是还没有完成初始路由信息的收集
+        const access_token = localStorage.getItem('access_token');
+        if (!access_token) {
+            return;
+        }
+        this.isCollectDefaultPath = true;
+          if (pathname === '/') {
+            WebMonitor.sendPageView(IndexMenu);
+          }
       }
     }
   }
@@ -341,6 +399,7 @@ class FLayout extends React.Component {
     this.addTabPage(payload);
   }
   addTabPage(payload) {
+    this.sendOpenMenuData(payload.pathname, payload.currentMenu);
     const openIframe = this.isOpenIframe(payload.currentMenu);
     if (openIframe) {
       payload.currentMenu.openIframe = true;
@@ -401,10 +460,7 @@ class FLayout extends React.Component {
     const isDeleteCurrTab = payload.deleteTabKey === activeTabKey;
     if (isDeleteCurrTab) {
       newState.activeTabKey = '/';
-      newState.currentMenu = {
-        urlAddress: '/',
-        fullName: '首页',
-      };
+      newState.currentMenu = IndexMenu;
     }
     this.setState({
       ...newState,
@@ -434,8 +490,11 @@ class FLayout extends React.Component {
     return /^http(s)?:/.test(url);
   }
   renderTabContent = () => {
-    const { curComponent, tabPages, activeTabKey = '', companyList = [],
-      currentProject, projectLoading } = this.state;
+    const { curComponent, tabPages, activeTabKey = '', companyList = [], currentComUseApp,
+      fetchComUseAppLoading, commonUseAppList, menus = [], currentApp } = this.state;
+    const menuList = currentApp ? menus.filter((each) => {
+      return each.appId === currentApp.appId;
+    }) : menus;
     const { location }  = this.props;
     const { hash } = location;
     const { currentMenu } = curComponent;
@@ -444,6 +503,26 @@ class FLayout extends React.Component {
     }
     const tabs = [];
     let propsObj = null;
+    let comProps = {
+      hash,
+      menuList,
+      companyList,
+      FLayoutContext,
+      openMenu: this.handleSetActiveMenu,
+      handleFullContentToScreen: this.handleFullContentToScreen,
+    };
+    const { clientId } = window.configs;
+    if (clientId === '10000160') { // 研发项目管理
+      comProps = Object.assign({}, comProps, {
+        currentComUseApp,
+        commonUseAppList,
+        fetchComUseAppLoading,
+        onCancelComUseApp: this.onCancelComUseApp,
+        onSwitchComUseApp: this.onSwitchComUseApp,
+        fetchCommonUseAppList: this.fetchCommonUseAppList,
+      });
+    }  
+    
     if (currentMenu && curComponent.pathname !== '/') {
       propsObj = {
         key: curComponent.pathname || Math.random() + '',
@@ -451,13 +530,7 @@ class FLayout extends React.Component {
         tabMenu: currentMenu,
         isShow: activeTabKey === curComponent.pathname,
         component: curComponent.component,
-        FLayoutContext: FLayoutContext,
-        onSwitchProject: this.onSwitchProject,
-        fetchProjectList: this.fetchProjectList,
-        companyList,
-        currentProject,
-        hash,
-        projectLoading,
+        ...comProps,
       };
       if (currentMenu.openIframe) {
         let iframeSrc = currentMenu.urlAddress;
@@ -478,13 +551,7 @@ class FLayout extends React.Component {
           tabMenu: tabPages[0].currentMenu,
           isShow: activeTabKey === tabPages[0].pathname,
           component: tabPages[0].component,
-          FLayoutContext: FLayoutContext,
-          onSwitchProject: this.onSwitchProject,
-          fetchProjectList: this.fetchProjectList,
-          companyList,
-          hash,
-          currentProject,
-          projectLoading,
+          ...comProps,
         };
         return (
           <TabComponent {...welcomePropsObj} />
@@ -497,16 +564,10 @@ class FLayout extends React.Component {
           return (<TabComponent
             key={pathname || Math.random() + ''}
             pathname={pathname}
-            hash={hash}
             tabMenu={each.currentMenu}
             isShow={activeTabKey ===  each.pathname}
             component={each.component}
-            FLayoutContext={FLayoutContext}
-            fetchProjectList={this.fetchProjectList}
-            onSwitchProject={this.onSwitchProject}
-            companyList={companyList}
-            currentProject={currentProject}
-            projectLoading={projectLoading}
+            {...comProps}
           />);
       }
     });
@@ -523,6 +584,7 @@ class FLayout extends React.Component {
     return false;
   }
   handleTabChange = (tab) => {
+    this.disActiveMenu = this.state.currentMenu;
     this.setState({
       activeTabKey: tab.pathname,
       activeTabSearch: tab.search,
@@ -548,6 +610,9 @@ class FLayout extends React.Component {
     }
   }
   handleTabClose = (tab) => {
+    if (tab && tab.currentMenu) {
+      this.deleteMenu = tab.currentMenu;
+    }
     this.delTabPage({
       deleteTabKey: tab.pathname,
     });
@@ -600,8 +665,28 @@ class FLayout extends React.Component {
       apps: newApps,
     });
   }
+  /**
+   * @desc 内容页全屏控制事件，全屏时，隐藏框架菜单和头部区域
+   * @param isFull 是否全屏
+   */
+  handleFullContentToScreen(isFull) {
+    const display = isFull ? 'none' : 'block';
+    const appNode = document.querySelector('#app');
+    if (appNode) {
+      appNode.querySelector('.sidebar-box').style.display = display;
+      appNode.querySelector('.fl-content-wrapper').style.marginLeft = isFull ? '0' : '230px';
+      appNode.querySelector('.topbar').style.display = display;
+      if (isFull) {
+        appNode.classList.add('fl-content-full');
+        fullScreen();
+      } else {
+        appNode.classList.remove('fl-content-full');
+        exitFullScreen();
+      }
+    }
+  }
   render() {
-    const { xc, userCenterConfig = {}, expandMenu = true, basePath, publicLayout = {} } = this.props;
+    const { userCenterConfig = {}, expandMenu = true, basePath, publicLayout = {} } = this.props;
     const currentUser = publicLayout.userinfo;
     const {
       userInfo,
@@ -617,8 +702,8 @@ class FLayout extends React.Component {
       activeTabSearch,
       isFullscreen,
       currentMenu,
-      projectList = [],
-      currentProject,
+      commonUseAppList = [],
+      currentComUseApp,
     } = this.state;
     const panelFloded = !panelCollapsed ? 'menu-panel-folded' : 'menu-panel-unfolded';
     if (userInfo && authCode) {
@@ -640,13 +725,14 @@ class FLayout extends React.Component {
               history={this.props.history}
               expandMenu={expandMenu}
               basePath={basePath}
-              projectList={projectList}
-              onSwitchProject={this.onSwitchProject}
-              onTopProject={this.onTopProject}
-              currentProject={currentProject}
+              commonUseAppList={commonUseAppList}
+              onSwitchComUseApp={this.onSwitchComUseApp}
+              onCancelComUseApp={this.onCancelComUseApp}
+              currentComUseApp={currentComUseApp}
               dispatch={this.props.dispatch}
             />
             <div
+              className="fl-content-wrapper"
               style={{
                 marginLeft: '230px',
                 minHeight: '100%',
@@ -674,7 +760,7 @@ class FLayout extends React.Component {
                 />
               </div>
               <div
-                className="container"
+                className="container fulu-wrapper"
                 style={{
                   position: 'relative',
                   overflowX: 'hidden',
@@ -683,8 +769,10 @@ class FLayout extends React.Component {
                 <FLayoutContext.Provider
                   value={{
                     apps: this.state.apps,
-                    projectList,
-                    onTopProject: this.onTopProject,
+                    commonUseAppList,
+                    currentComUseApp,
+                    onSwitchComUseApp: this.currentComUseApp,
+                    onCancelComUseApp: this.onCancelComUseApp,
                     toggleAppVisable: this.handleToggleAppVisable,
                     basicInfo: this.state.basicInfo,
                   }}

@@ -25,6 +25,9 @@ function canInvokeAuth() {
 }
 
 function auth() {
+    if (window.location.pathname === '/403') {
+        return false;
+    }
     if (!canInvokeAuth()) {
         localStorage.setItem('authCount', 0);
         window.location.href = '/403';

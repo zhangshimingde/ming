@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Checkbox ,Col,Row} from 'antd';
+import { Checkbox ,Col,Row } from 'antd';
 import './checkbox.less';
 
 class CheckBoxs extends Component {

@@ -66,6 +66,7 @@ function handleErrCallBack(error) {
         break;
       case 401:
         message.error('登录token失效，请重新登录');
+        service.loginOut();
         break;
       case 403:
         // 403（Forbidden）：已授权或不需要授权，但禁止访问；跳转到 403 页
@@ -137,8 +138,8 @@ function handleErrNavCallBack(error) {
         message.error('参数错误');
         break;
       case 401:
-        // message.error('登录token失效，请重新登录');
-        return instance.login();
+        message.error('登录token失效，请重新登录');
+        service.loginOut();
         break;
       case 403:
         // 403（Forbidden）：已授权或不需要授权，但禁止访问；跳转到 403 页
@@ -200,11 +201,13 @@ function handleErrNavCallBack(error) {
 }
 
 instance.login = function () {
+  if (location.pathname === '/403') {
+    return;
+  }
   if (!canInvokeAuth()) {
     localStorage.setItem('authCount', 0);
     return window.location.href = '/403';
   }
-
   const count = parseInt(localStorage.getItem('authCount') || 0);
   const lastAuthTime = parseInt(localStorage.getItem('lastAuthTime') || 0);
   const current = Math.round(new Date().getTime() / 1000);

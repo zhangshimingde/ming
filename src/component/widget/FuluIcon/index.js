@@ -28,7 +28,7 @@ class FuluIcon extends PureComponent {
     }
     render() {
         const { width = 18, height = 18, src, showDefault, iconType, ...rest } = this.props;
-        const cls = src && src.slice(src.lastIndexOf('.') + 1) === 'svg' && iconType === 'menu' ? 'white-icon anticon' : '';
+        const cls = src && src.slice(src.lastIndexOf('.') + 1) === 'svg' && iconType === 'menu' ? 'white-icon anticon' : 'img-icon';
         return (
             <img
                 src={this.deleteUrlProtocol(src)}

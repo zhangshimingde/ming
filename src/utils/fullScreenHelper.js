@@ -9,4 +9,49 @@ function isFullscreen() {
     && window.outerWidth === window.screen.width;
 }
 
+function fullScreen() {
+    const el = document.getElementsByTagName('html')[0];
+    const rfs = el.requestFullScreen
+        || el.webkitRequestFullScreen
+        || el.mozRequestFullScreen
+        || el.msRequestFullScreen;
+    let wscript = null;
+    if (typeof rfs !== 'undefined' && rfs) {
+        rfs.call(el);
+        return;
+    }
+    if (typeof window.ActiveXObject !== 'undefined') {
+        wscript = new window.ActiveXObject('WScript.Shell');
+        if (wscript) {
+            wscript.SendKeys('{F11}');
+        }
+    }
+}
+
+function exitFullScreen() {
+    const el = document;
+    const cfs = el.cancelFullScreen
+        || el.webkitCancelFullScreen
+        || el.mozCancelFullScreen
+        || el.exitFullScreen;
+    let wscript = null;
+
+    if (typeof cfs !== 'undefined' && cfs) {
+        cfs.call(el);
+        return;
+    }
+
+    if (typeof window.ActiveXObject !== 'undefined') {
+        wscript = new window.ActiveXObject('WScript.Shell');
+        if (wscript != null) {
+            wscript.SendKeys('{F11}');
+        }
+    }
+}
+
 export default isFullscreen;
+
+export {
+    fullScreen,
+    exitFullScreen,
+};

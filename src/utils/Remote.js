@@ -21,6 +21,12 @@ axios.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
+const logout = () => {
+    const redirectUrl = window.location.origin;
+    const logoutUrl = `${window.configs.host.passport.auth}/oauth/authorize?client_id=${window.configs.authorId || window.configs.clientId}&redirect_uri=${encodeURIComponent(redirectUrl)}&response_type=code&scope=get_user_info&state=xyz`;
+    window.location.href = `${window.configs.host.passport.auth}/user/logout?returnurl=${encodeURIComponent(logoutUrl)}`;
+};
+
 const handleErrorResponse = (response) => {
     if (response) {
         const { config } = response;
@@ -34,7 +40,8 @@ const handleErrorResponse = (response) => {
             case 401:
                 return response ? response.data : response.error;
             case 504:
-                window.location.href = '/login';
+                // window.location.href = '/login';
+                logout();
                 break;
             case 403:
                 window.location.href = '/403';

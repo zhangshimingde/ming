@@ -16,16 +16,19 @@ const columns = [
     }, {
         title: '店铺订单号',
         width: 180,
+        resizeble: true,
         dataIndex: 'name',
         fixed: 'left',
     }, {
         title: '付款时间',
         width: 120,
+        resizeble: true,
         dataIndex: 'age',
         fixed: 'left',
     }, {
         title: '充值账号',
         width: 100,
+        resizeble: true,
         dataIndex: 'sex',
         fixed: 'left',
     }, {

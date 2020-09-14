@@ -1,31 +1,19 @@
 
-// 复选框
-// 默认的边框颜色
-.ant-checkbox-inner {
-    .rounded-corners;
-    // border: 1px solid @light-gray-color;
+.fulu-wrapper {
+    .ant-checkbox-inner {
+        .rounded-corners;
+        &:after {
+            left: 4px;   
+        }
+    }
+    .ant-checkbox-checked {
+        .ant-checkbox-inner {
+            background-color: @primaryColor !important;
+            border-color: @primaryColor !important;
+        }
+    }
+    .ant-checkbox-indeterminate .ant-checkbox-inner::after {
+        left: 7px;
+    }
 }
 
-// 选中的背景颜色
-.ant-checkbox-checked .ant-checkbox-inner {
-    background: @link-color;
-    border: 1px solid @link-color;
-}
-
-// 禁用的背景颜色
-.ant-checkbox-disabled .ant-checkbox-inner {
-    background: #F0F0F0 !important;
-    border: 1px solid #F0F0F0 !important;
-}
-
-// 禁用的默认边框颜色
-.ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner::after {
-    // border: 1px solid rgba(176, 194, 235, 1) !important;
-}
-
-// table上选了一个checkbox，表头的样式
-.ant-checkbox-indeterminate .ant-checkbox-inner::after {
-    background-color: @link-color;
-    width: 10px !important;
-    height: 10px !important;
-}

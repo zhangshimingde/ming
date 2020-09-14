@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, message, Menu, Dropdown, Badge, Icon } from 'antd';
 import getUserCenterUrl from '../../../configs/UserCenterUrl';
 import service from '../utils/service';
+import ShopSvg from '../Icons/images/shop.svg';
 // import MerchantAuthSecond from './MerchantAuthSecond';
 import "./index.less";
 
@@ -106,6 +107,7 @@ class MyHeader extends Component {
                 const balanceArr = [];
                 const financeInfo = res.data || {};
                 window.Finance = financeInfo;
+                const isFp = window.merchantInfo && window.merchantInfo.isFp;
                 const { isPurchasers, isSupplier } = financeInfo;
                 this.props.onUpdateContext({
                     financeInfo,
@@ -114,23 +116,22 @@ class MyHeader extends Component {
                 if (isPurchasers == '1' && financeInfo.purchasers) { // 进货商
                     balanceArr.push({
                         text: '进货商余额',
-                        // balance: financeInfo.purchasers.balance,
-                        balance: null,
+                        balance: financeInfo.purchasers.balance,
                     });
                     accountType = 2;
                 }
-                if (isSupplier == '1' && financeInfo.supplier) { // 供货商
+                if ((isSupplier == '1' || isFp == 1) && financeInfo.supplier) { // 供货商 FP展示供货商余额
                     if (balanceArr.length === 1) {
                         balanceArr.length = 0;
                     }
                     balanceArr.push({
-                        text: '供货商余额',
+                        text: isFp == 1 ? '余额' : '供货商余额',
                         balance: financeInfo.supplier.balance,
                     });
                     accountType = accountType === 2 ? 4 : 3;
                 }
                 // 既不是供货商，又不是进货商
-                if (accountType === 1) {
+                if (accountType === 1 && isFp != 1) {
                     balanceArr.push({
                         text: '余额',
                         balance: financeInfo.purchasers ? financeInfo.purchasers.balance : 0, // 显示进货商余额
@@ -339,10 +340,10 @@ class MyHeader extends Component {
                             return null;
                         }
                         const mb = toThousands(this.formatMoney(balance));
-                        const [ intNum, decimalNum ] = mb.split('.');
+                        const [intNum, decimalNum] = mb.split('.');
                         return (
                             <React.Fragment key={`${text}-${balance}`}>
-                                { i === 1 ? <br /> : null }
+                                {i === 1 ? <br /> : null}
                                 <span className="rmb-icon">¥</span>
                                 <span title={mb}>
                                     {intNum}.<span className="decimal">{decimalNum}</span>
@@ -360,7 +361,8 @@ class MyHeader extends Component {
         if (curMerchant == null || !Array.isArray(merchants)) {
             return null;
         }
-        const nodeList = merchants.filter(item => item.auditStatus == '1' && item.id != curMerchant.id).map((item) => {
+        // isForbidden 为true 的是推客 过滤掉
+        const nodeList = merchants.filter(item => (item.auditStatus == '1' && item.id != curMerchant.id && !item.isForbidden)).map((item) => {
             return (
                 <li key={item.id}>
                     <a href="javascript:void(0)" title={item.name} onClick={this.switchMerchant.bind(this, item.id)}>{item.name}</a>
@@ -368,9 +370,14 @@ class MyHeader extends Component {
             )
         });
         return nodeList.concat(
-                <li key="rt" style={{ borderTop: "1px solid rgba(0,0,0,0.1)" }}>
-                    <a href="javascript:void(0)" onClick={() => this.props.returnMerchantZone()}>返回商户管理区</a>
-                </li>
+            <li
+                key="rt"
+                style={{
+                    borderTop: "1px solid rgba(0,0,0,0.1)",
+                }}
+            >
+                <a href="javascript:void(0)" onClick={() => this.props.returnMerchantZone()}>返回商户管理区</a>
+            </li>
         );
     }
 
@@ -386,7 +393,7 @@ class MyHeader extends Component {
         }
         let curMerchant = {};
         if (Array.isArray(merchants) && merchants.length > 0) {
-            curMerchant = merchants.find(item => item.id == localStorage.getItem("MerchantId"));
+            curMerchant = merchants.find(item => item.id == localStorage.getItem("MerchantId")) || {};
         }
         if (step == 2) {
             Footer = [
@@ -396,11 +403,11 @@ class MyHeader extends Component {
         }
         return (
             <div className="top" style={{ background: "#192632" }}>
-                <Icon
-                    className="trigger"
+                {/* <Icon
+                    className="trigger menu-expand-btn"
                     type={collapsed ? 'menu-unfold' : 'menu-fold'}
                     onClick={this.props.toggle}
-                />
+                /> */}
                 <div className="inner-app">
                     {
                         authAppslimt.map((appid, index) => {
@@ -430,17 +437,18 @@ class MyHeader extends Component {
                         <div className="msg-box uc-item" onClick={this.onNavToMsgCenter}>
                             <Icon type="bell" />
                             {
-                                showMsgTotal ? 
-                                <Badge
-                                    count={!showMsgTotal || isNaN(unReadMsgTotal) ? 0 : unReadMsgTotal}
-                                    offset={[5, -2]}
-                                >
-                                    消息中心
+                                showMsgTotal ?
+                                    <Badge
+                                        count={!showMsgTotal || isNaN(unReadMsgTotal) ? 0 : unReadMsgTotal}
+                                        offset={[5, -2]}
+                                    >
+                                        消息中心
                                 </Badge> : <span style={{ marginLeft: '8px' }}>消息中心</span>
                             }
                         </div>
                     }
-                    <div className="merchant-box uc-item">
+                    <div className="merchant-box uc-item arrow-wrap">
+                        <Icon component={ShopSvg} style={{ marginLeft: '6px' }} />
                         <span
                             className="merchant-name"
                             title={curMerchant.name}
@@ -451,7 +459,7 @@ class MyHeader extends Component {
                             {this.renderMerchantList(curMerchant)}
                         </ul>
                     </div>
-                    <div className="user-center-content uc-item">
+                    <div className="user-center-content uc-item arrow-wrap">
                         <span className="user-mobile">
                             <Icon type="user" />
                             {userinfo.mobile}

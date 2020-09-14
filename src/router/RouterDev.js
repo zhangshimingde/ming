@@ -76,6 +76,16 @@ const RouterWrapper = ({ history, app }) => {
                 />
                 <RouteWithLayout
                     layout={PublicLayout}
+                    path="/buildRecords"
+                    component={() => { return (<div>div</div>); }}
+                />
+                <RouteWithLayout
+                    layout={PublicLayout}
+                    path="/projectList"
+                    component={TestPage}
+                />
+                <RouteWithLayout
+                    layout={PublicLayout}
                     exact
                     path="/open/ProjectManager/PM_Project/Index/:id"
                     component={EditPage}
@@ -101,7 +111,7 @@ const RouterWrapper = ({ history, app }) => {
                 <RouteWithLayout
                     layout={PublicLayout}
                     exact
-                    path="/usePage/searchFormPage"
+                    path="/purchaseControlManage/equityList"
                     component={SearchFormPage}
                 />
                 <RouteWithLayout
@@ -158,6 +168,7 @@ const RouterWrapper = ({ history, app }) => {
                     component={ContentPage}
                 />
                 <RouteWithLayout layout={PublicLayout} path="/fav" />
+                <RouteWithLayout layout={PublicLayout} path="/settings" />
                 <Route exact path="/403" component={PageForbidden} />
             </Switch>
         </ConnectedRouter>

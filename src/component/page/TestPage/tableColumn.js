@@ -21,12 +21,18 @@ const columns = [{
         title: '序号',
         sortIndex: true,
         align: 'center',
-        width: 80,
+        width: '180px',
+        resizeble: true, // 列可伸缩配置
+        minWidth: '100px',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => {
+            return a.age - b.age
+        },
     }, {
         title: 'name',
         dataIndex: 'name',
         width: '180px',
-        // resizeble: true, // 列可伸缩配置
+        resizeble: true, // 列可伸缩配置
         minWidth: '100px',
         nowrap: true,
         showToolTip: true,

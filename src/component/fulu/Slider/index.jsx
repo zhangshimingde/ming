@@ -4,9 +4,9 @@ import { withRouter } from "react-router-dom";
 import { Layout, Menu, Icon } from 'antd';
 import IconMap from '../Icons';
 import Logo from '../Logo';
+import WebMonitor from '../../widget/WebMonitor';
 import FuluIcon from '../../widget/FuluIcon';
 import Bradge from '../Bradge';
-
 import service from '../utils/service';
 
 import "./index.less";
@@ -16,7 +16,10 @@ const { Sider } = Layout;
 const MenuItem = Menu.Item;
 const SubMenu = Menu.SubMenu;
 const allowPollingApps = ["10000101", "10000084", "10000071"];
-
+const IndexMenu = {
+    fullName: '首页',
+    urlAddress: '/',
+};
 window.updateMenuBadge = function () {
     this.getClientMessage();
 }
@@ -26,15 +29,16 @@ class MySlider extends Component {
         super(props);
         this.state = {
             selectKeys: [],
+            selectMenu: null,
             customerNotify: {},
             defaultOpenKeys: [],
-            // openKeys: [],
             pollingTime: props.pollingTime, // 轮询间隔时间
         }
         window.updateMenuBadge = window.updateMenuBadge.bind(this);
         this.getClientMessage = this.getClientMessage.bind(this);
         this.startPolling = this.startPolling.bind(this);
         this.errPollCount = 0; // 轮询异常次数
+        this.isCollectDefaultPath = false; // 收集应用初次打开的路由信息的标识
     }
     static getDerivedStateFromProps(nextProps, prevState) {
         const { pollingTime } = nextProps;
@@ -63,9 +67,19 @@ class MySlider extends Component {
     }
     componentDidUpdate() {
         const { menus, history, currentMenu } = this.props;
-        
+        const pathname = history.location.pathname;
+        if (window.monitorOpen && !this.isCollectDefaultPath) { // 开启了埋点收集功能，但是还没有完成初始路由信息的收集
+            if (pathname === currentMenu.urlAddress || pathname === '/') {
+                let _currentMenu = currentMenu;
+                this.isCollectDefaultPath = true;
+                if (!currentMenu.urlAddress) {
+                    _currentMenu = IndexMenu;
+                }
+                WebMonitor.sendPageView(_currentMenu);
+            }
+        }
         if (Array.isArray(menus) && menus.length > 0) {
-            if (history.location.pathname !== '/') {
+            if (pathname !== '/') {
                 if (Object.keys(currentMenu).length > 0) {
                     this.handleDefaultOpenMenu();
                     this.handleExpandAllMenu();
@@ -111,11 +125,9 @@ class MySlider extends Component {
         const { menuBradgeUrl } = this.props;
         service.getCustomerNotify(menuBradgeUrl).then(res => {
             if (res.code == '0') {
-                // if (this.pollingTimer) {
                 this.setState({
                     customerNotify: res.data || {},
                 });
-                // }
             }
             this.startPolling();
         }).catch(() => {
@@ -131,12 +143,20 @@ class MySlider extends Component {
     clickMenu = (e) => {
         const m = this.props.listMenu.find(item => item.moduleId === e.key);
         if (m && m.urlAddress) {
+            WebMonitor.sendPageView(m, this.getCurrentMenu());
             this.props.history.push(m.urlAddress);
-
             this.setState({
-                selectKeys: [e.key]
+                selectKeys: [e.key],
+                selectMenu: m,
             })
         }
+    }
+    getCurrentMenu() {
+        let menu = this.state.selectMenu || this.props.currentMenu;
+        if (Object.keys(menu).length === 0) {
+            menu = IndexMenu;
+        }
+        return menu;
     }
     isShowBradge(menu) {
         const { menuBradges = {} } = this.props;
@@ -227,7 +247,6 @@ class MySlider extends Component {
                                 const subMenuTitle = subMenu.querySelector('.ant-menu-submenu-title');
                                 if (subMenuTitle.getAttribute('aria-expanded') !== 'true') {
                                     subMenuTitle.click();
-                                    // menuSet.delete(subMenuTitle.querySelector('.fulu-menu-name').innerText);
                                 }
                             }
                         });
@@ -321,7 +340,8 @@ class MySlider extends Component {
         return (
             <Sider
                 className="myslider"
-                width={210}
+                width={200}
+                collapsedWidth={64}
                 style={{ background: "#192632" }}
                 trigger={null}
                 collapsible
@@ -342,6 +362,11 @@ class MySlider extends Component {
                             this.renderMenu(menus)
                         }
                     </Menu>
+                    <Icon
+                        className="trigger menu-expand-btn"
+                        type={collapsed ? 'menu-unfold' : 'menu-fold'}
+                        onClick={this.props.toggle}
+                    />
                 </div>
             </Sider>
         );

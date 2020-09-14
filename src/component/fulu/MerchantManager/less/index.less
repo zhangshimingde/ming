@@ -1,18 +1,23 @@
 @keyframes antStatusProcessing {
     from {
-        transform:scale(.8);
-        opacity:.5;
+        transform: scale(.8);
+        opacity: .5;
     }
+
     to {
-        transform:scale(2.4);opacity:0
+        transform: scale(2.4);
+        opacity: 0
     }
 }
+
 .center-link {
     color: inherit;
+
     &:hover {
         text-decoration: underline;
     }
 }
+
 .merchant_manager {
     background: #ffffff;
     padding: 0 20px 20px 20px;
@@ -26,6 +31,7 @@
         color: #333;
         border-bottom: 1px solid #e6e8e7;
         font-size: 16px;
+
         &:before {
             content: '';
             position: relative;
@@ -36,6 +42,7 @@
             vertical-align: middle;
             margin-right: 5px;
         }
+
         .tips {
             font-size: 90%;
             margin-left: 10px;
@@ -45,6 +52,7 @@
 
     .merchant_content {
         margin-top: 8px;
+
         .merchant_card {
             position: relative;
             float: left;
@@ -59,10 +67,22 @@
             background-color: #f1f2f6;
             cursor: pointer;
             border: 1px solid #e8e8e8;
-            
-            &:hover{
+
+            &.forbidden {
+                cursor: not-allowed;
+
+                .bd-auth,
+                .cooper {
+                    background: #3483d4;
+                    background: url('../images/merchant_forbidden.png') no-repeat;
+                }
+
+            }
+
+            &:hover {
                 box-shadow: 0px 0px 3px 2px #ccc;
             }
+
             .card-item {
                 position: absolute;
                 color: #ffffff;
@@ -73,15 +93,19 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
             }
+
             .code {
                 top: 24px;
             }
+
             .name {
                 top: 42px;
             }
+
             .remark {
                 top: 60px;
             }
+
             .tag {
                 position: absolute;
                 right: -6px;
@@ -90,6 +114,7 @@
                 height: 22px;
                 background: url('../images/cooper.png') no-repeat;
             }
+
             .bd {
                 flex: 1;
                 display: flex;
@@ -98,29 +123,35 @@
                 font-size: 40px;
                 background-size: contain;
             }
+
             // 已认证模式
             .bd-auth {
                 background: #3483d4;
                 background: url('../images/merchant.png') no-repeat;
-                
+
             }
+
             // 协作模式
             .bd-cooper {
                 // background-color: #3483d4;
                 background: url('../images/merchant.png') no-repeat;
             }
+
             .bd-apply {
                 // background-color: #3483d4;
                 background: url('../images/check.png') no-repeat;
             }
+
             .edit-icon {
                 position: absolute;
                 right: 12px;
                 bottom: 21px;
+
                 &:hover {
                     color: #3483d4;
                 }
             }
+
             .desc {
                 font-size: 12px;
                 height: 35px;
@@ -141,7 +172,7 @@
                     border-radius: 50%;
                     margin-right: 4px;
 
-                    &::after{
+                    &::after {
                         position: absolute;
                         top: 0;
                         left: 0;
@@ -155,18 +186,27 @@
                 }
             }
         }
+
         .merchant_card_create {
             color: #5a5a5a;
+
             .title {
                 text-align: center;
                 position: absolute;
                 top: 124px;
                 font-size: 12px;
             }
+
             &:hover {
                 color: #3983d7;
             }
         }
     }
-    
+
+}
+
+.create-member-modal {
+    .ant-radio-wrapper {
+        min-width: 105px;
+    }
 }

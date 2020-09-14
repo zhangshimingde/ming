@@ -1,12 +1,14 @@
-import isFullscreen from './fullScreenHelper';
+import isFullscreen, { exitFullScreen, fullScreen } from './fullScreenHelper';
 import auth from './Auth';
 import Remote from './Remote';
 import checkSubRoutePath, { isPathEqual } from './RouterPathUtil';
 
 export {
-    isFullscreen,
-    Remote,
     auth,
-    checkSubRoutePath,
+    Remote,
+    fullScreen,
     isPathEqual,
+    isFullscreen,
+    exitFullScreen,
+    checkSubRoutePath,
 };

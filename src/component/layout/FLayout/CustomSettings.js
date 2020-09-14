@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Card, Button } from 'antd';
+import { Button } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { Service } from '../../../annotation';
-import { AppIcon } from '../../widget';
+import AppIcon from '../../widget/AppIcon';
 import './less/customSettings.less';
 
 @Service('CustomSettingService')
@@ -37,7 +37,7 @@ class CustomSettings extends React.Component {
                     <AppIcon
                         type={o.logoUrl}
                         className="icon"
-                        style={{ fontSize: 50 }}
+                        style={{ fontSize: '50px' }}
                     />
                     <span className="settings-item-name">
                         {o.fullName}
@@ -91,30 +91,61 @@ class CustomSettings extends React.Component {
                 {
                     ({ apps, toggleAppVisable }) => {
                         return (
-                            <Card
-                                className="custom-settings-container"
+                            <div
+                                className="ant-card custom-settings-container ant-card-bordered ant-card-wider-padding ant-card-padding-transition"
                                 style={{
-                                    margin: '20px',
-                                    position: 'absolute',
+                                    margin: '20px', position: 'absolute'
                                 }}
-                                title={this.renderCardTitle()}
                             >
-                                <ul className="custom-settings-content">
-                                    <li>
-                                        <p
-                                            className="custom-settings-classtitle"
-                                            style={{ display: 'none' }}
-                                        >
-                                            <span className="custom-settings-item">
-                                                订制子应用
-                                            </span>
-                                        </p>
-                                        <ul>
-                                            {this.initApps(apps, toggleAppVisable)}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </Card>
+                                <div className="ant-card-head">
+                                    <div className="ant-card-head-wrapper">
+                                        <div className="ant-card-head-title">
+                                            {this.renderCardTitle()}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="ant-card-body">
+                                    <ul className="custom-settings-content">
+                                        <li>
+                                            <p
+                                                className="custom-settings-classtitle"
+                                                style={{ display: 'none' }}
+                                            >
+                                                <span className="custom-settings-item">
+                                                    订制子应用
+                                                </span>
+                                            </p>
+                                            <ul>
+                                                {this.initApps(apps, toggleAppVisable)}
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            // <Card
+                            //     className="custom-settings-container"
+                            //     style={{
+                            //         margin: '20px',
+                            //         position: 'absolute',
+                            //     }}
+                            //     title={this.renderCardTitle()}
+                            // >
+                            //     <ul className="custom-settings-content">
+                            //         <li>
+                            //             <p
+                            //                 className="custom-settings-classtitle"
+                            //                 style={{ display: 'none' }}
+                            //             >
+                            //                 <span className="custom-settings-item">
+                            //                     订制子应用
+                            //                 </span>
+                            //             </p>
+                            //             <ul>
+                            //                 {this.initApps(apps, toggleAppVisable)}
+                            //             </ul>
+                            //         </li>
+                            //     </ul>
+                            // </Card>
                         );
                     }
                 }

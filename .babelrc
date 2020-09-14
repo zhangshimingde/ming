@@ -14,7 +14,6 @@
     ],
     "plugins": [
       "dva-hmr",
-      // "add-module-exports",
       "transform-runtime",
       "transform-decorators-legacy",
       [

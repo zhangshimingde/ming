@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import CustomSort from "./CustomSort";
 import Checkboxs from './Checkbox';
-import {Spin,message} from 'antd'
+import { Spin,message } from 'antd';
 import './index.less'
 class DragAndDrop extends Component {
   constructor(props){

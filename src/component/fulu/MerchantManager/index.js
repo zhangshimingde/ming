@@ -30,14 +30,14 @@ class MerchantManager extends Component {
         //     this.getList();
         // }
     }
-    
+
     componentWillReceiveProps(nextProps) {
         const { refreshUI } = nextProps;
         if (refreshUI && refreshUI != this.props.refreshUI && !this.props.CustomManageZone) {
             this.getList();
         }
     }
-    
+
     getList = () => {
         service.getUserMerchants().then((res) => {
             if (res.code == '0') {
@@ -55,13 +55,13 @@ class MerchantManager extends Component {
         const { modalType } = this.state;
         if (modalType === ADD) {
             service.createMerchant(data).then((res) => {
-                if( res.code == '0') {
+                if (res.code == '0') {
                     this.getList();
                 }
             });
         } else {
             service.updateMerchantRemark(data).then((res) => {
-                if( res.code == '0') {
+                if (res.code == '0') {
                     message.success('修改成功');
                     this.getList();
                 }
@@ -85,10 +85,14 @@ class MerchantManager extends Component {
 
     // 点击进入商户
     handleMerchant(merchant) {
+        // 推客角色不能进入
+        if (merchant.isForbidden) {
+            return
+        }
         if (merchant.isOwner) {
             this.props.history.push("/");
             this.props.selectMerchant(merchant.id);
-        } 
+        }
         else {
             service.existRole(merchant.id).then(res => {
                 if (res.code == 0) {
@@ -101,12 +105,12 @@ class MerchantManager extends Component {
                 }
             });
         }
-        
+
     }
     /**
      * 编辑商户备注
      */
-    handleEditRemark = ({ id, name, remark, isSupplier }) => {
+    handleEditRemark = ({ id, name, remark, isSupplier, cooperativeType }) => {
         const merchantRole = isSupplier === 1 ? 2 : 1;
         this.setState({
             showModal: true,
@@ -116,6 +120,7 @@ class MerchantManager extends Component {
                 name,
                 remark,
                 merchantRole,
+                cooperativeType,
             }
         });
     }
@@ -130,6 +135,10 @@ class MerchantManager extends Component {
         // 0待审核  1已审核 2审核不通过
         // 商户认证状态 0未认证 1认证待审核 2认证通过 3认证不通过
         return data.map((item) => {
+            let containerClsName = "merchant_card";
+            if (item.isForbidden) {
+                containerClsName += " forbidden";
+            }
             if (item.auditStatus == '1') {
                 let clsName = "bd ";
                 if (item.isOwner) {
@@ -138,15 +147,15 @@ class MerchantManager extends Component {
                 else {
                     clsName += "bd-cooper";
                 }
-                const { isPurchasers } = item;
-                const roleName = isPurchasers === 1 ? '进货商' : '供货商';
+                const { isPurchasers, isFp } = item;
+                const roleName = isFp === 1 ? "FP" : isPurchasers === 1 ? '进货商' : '供货商';
                 return (
-                    <div className="merchant_card" key={item.id} onClick={() => { this.handleMerchant(item); }}>
+                    <div className={containerClsName} key={item.id} onClick={() => { this.handleMerchant(item); }}>
                         <p className="code card-item" title={item.code}>{item.code}-{roleName}</p>
                         <span className="name card-item" title={item.name}>{item.name}</span>
                         <p className="remark card-item" title={item.remark}>{item.remark}</p>
                         <p className="remark card-item" title={item.balance} style={{ marginTop: '18px' }}>{item.balance}</p>
-                        { !item.isOwner && <span className="tag"></span> }
+                        {!item.isOwner && <span className="tag"></span>}
                         <div className={clsName}></div>
                         {
                             item.authenticationStatus == '0' &&
@@ -165,25 +174,25 @@ class MerchantManager extends Component {
                             <div className="desc" title="">认证不通过</div>
                         }
                         {
-                            item.isOwner && 
-                                <Icon
-                                    type="form"
-                                    className="edit-icon"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        this.handleEditRemark(item);
-                                    }}
-                                />
+                            item.isOwner &&
+                            <Icon
+                                type="form"
+                                className="edit-icon"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.handleEditRemark(item);
+                                }}
+                            />
                         }
                     </div>
                 )
             }
             else if (item.auditStatus == '0') {
                 return (
-                    <div className="merchant_card" key={item.id} style={{ cursor: 'default'}}>
-                        <p className="code card-item" title={item.code} style={{ color: "#989898"}}>{item.code}</p>
-                        <span className="name card-item" title={item.name} style={{ color: "#989898"}}>{item.name}</span>
-                        <p className="remark card-item" title={item.remark} style={{ color: "#989898"}}>{item.remark}</p>
+                    <div className={containerClsName} key={item.id} style={{ cursor: 'default' }}>
+                        <p className="code card-item" title={item.code} style={{ color: "#989898" }}>{item.code}</p>
+                        <span className="name card-item" title={item.name} style={{ color: "#989898" }}>{item.name}</span>
+                        <p className="remark card-item" title={item.remark} style={{ color: "#989898" }}>{item.remark}</p>
                         <p className="remark card-item" title={item.balance} style={{ color: "#989898", marginTop: '18px' }}>{item.balance}</p>
                         <div className="bd bd-apply">
                         </div>
@@ -191,15 +200,15 @@ class MerchantManager extends Component {
                             <span className="dot-blue"></span>审核中
                         </div>
                         {
-                            item.isOwner && 
-                                <Icon
-                                    type="form"
-                                    className="edit-icon"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        this.handleEditRemark(item);
-                                    }}
-                                />
+                            item.isOwner &&
+                            <Icon
+                                type="form"
+                                className="edit-icon"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    this.handleEditRemark(item);
+                                }}
+                            />
                         }
                     </div>
                 )
@@ -245,42 +254,43 @@ class MerchantManager extends Component {
                     </div>
                 </div>
                 <Content className="layout-content">
-                {
-                    CustomManageZone ? <CustomManageZone
-                        toEnterApp={this.handleMerchant}
-                        fetchMerchantList={this.getList}
-                        merchantList={merchants}
-                    /> : (
-                        <div className="merchant_manager">
-                           {this.renderTitle()}
-                            <div className="merchant_content">
-                                {
-                                    this.renderMerchantZone(merchants)
-                                }
-                                <div
-                                    className="merchant_card merchant_card_create"
-                                    style={{ background: "#fff" }}
-                                    onClick={this.handleAddMerchant}
-                                >
-                                    <div className="bd" style={{ background: "#f1f2f6"}}>
-                                        <Icon type="plus" style={{ color: "#d8d8d8" }} />
-                                        <div className="title" >
-                                            创建商户
+                    {
+                        CustomManageZone ? <CustomManageZone
+                            toEnterApp={this.handleMerchant}
+                            fetchMerchantList={this.getList}
+                            merchantList={merchants}
+                        /> : (
+                                <div className="merchant_manager">
+                                    {this.renderTitle()}
+                                    <div className="merchant_content">
+                                        {
+                                            this.renderMerchantZone(merchants)
+                                        }
+                                        <div
+                                            className="merchant_card merchant_card_create"
+                                            style={{ background: "#fff" }}
+                                            onClick={this.handleAddMerchant}
+                                        >
+                                            <div className="bd" style={{ background: "#f1f2f6" }}>
+                                                <Icon type="plus" style={{ color: "#d8d8d8" }} />
+                                                <div className="title" >
+                                                    创建商户
+                                        </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    {
+                                        showModal && <MyModal
+                                            handleOk={this.handleOk}
+                                            modalType={modalType}
+                                            editData={editData}
+                                            isInternal={userinfo && userinfo.isInternal}
+                                            handleCancel={this.handleCancel}
+                                        />
+                                    }
                                 </div>
-                            </div>
-                            {
-                                showModal && <MyModal
-                                    handleOk={this.handleOk}
-                                    modalType={modalType}
-                                    editData={editData}
-                                    handleCancel={this.handleCancel}
-                                />
-                            }
-                        </div>
-                    )
-                }
+                            )
+                    }
                 </Content>
             </Layout>
         );

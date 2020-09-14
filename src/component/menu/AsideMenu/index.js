@@ -3,7 +3,7 @@ import { Menu, Dropdown, message, Icon, Tree } from 'antd';
 import { Scrollbars } from 'react-custom-scrollbars';
 import url from 'url';
 import _ from 'lodash';
-import { AppIcon } from '../../widget';
+import AppIcon from '../../widget/AppIcon';
 import Search from './Search';
 import fold from './images/fold.svg';
 import arrow from './images/arrow.svg';
@@ -25,9 +25,12 @@ class AsideMenu extends React.Component {
       companyList: [],
       selectAppId: '',
       selectAppName: '',
-      currentProject: null,
+      currentApp: null,
       currentCompany: {},
       openKeys: [],
+      // searchProjectKey: '',
+      // projectOpenKeys: [],
+      projectTreeVisiable: false,
       selectedKeys: [],
     };
     this.handleAppClick = this.handleAppClick.bind(this);
@@ -38,11 +41,27 @@ class AsideMenu extends React.Component {
     this.menuItemList = []; // 应用对应的所有子菜单列表
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.currentMenu && nextProps.currentMenu.moduleId !== this.props.currentMenu.moduleId) {
+    if (nextProps.currentMenu && this.props.currentMenu && nextProps.currentMenu.moduleId !== this.props.currentMenu.moduleId) {
       this.setState({
         selectedKeys: [nextProps.currentMenu.moduleId],
       });
     }
+    // if (!this.initProjectOpenKey && nextProps.currentApp && Array.isArray(nextProps.projectList)) {
+    //   const defaultOpenParentNode = nextProps.projectList.find((item) => {
+    //     if (Array.isArray(item.projects)) {
+    //       return item.projects.findIndex((appItem) => {
+    //         return appItem.id === nextProps.currentApp.id;
+    //       }) >= 0;
+    //     }
+    //     return false;
+    //   });
+    //   if (defaultOpenParentNode) {
+    //     this.setState({
+    //       projectOpenKeys: [`${defaultOpenParentNode.groupId}`],
+    //     });
+    //   }
+    //   this.initProjectOpenKey = true;
+    // }
   }
   componentWillMount() {
     this.initFetchData();
@@ -140,6 +159,9 @@ class AsideMenu extends React.Component {
     const response = await this.props.service.fetchFavsList();
     return response;
   }
+  handleVisibleChange = flag => {
+    this.setState({ projectTreeVisiable: flag });
+  };
   getListFromData(data) {
     return Array.isArray(data) ? data : data && data.list;
   }
@@ -411,6 +433,7 @@ class AsideMenu extends React.Component {
       return (
         <TreeNode
           key={parentNode.moduleId}
+          data-key={parentNode.moduleId}
           title={parentNode.fullName}
         >
           {
@@ -468,7 +491,7 @@ class AsideMenu extends React.Component {
 
     return organizes.filter(each => currentUser.organizeIds.indexOf(each.id) >= 0).map((item) => {
         return (
-          <Menu.Item>
+          <Menu.Item key={each.id}>
             <a
               href="javascript:void(0);"
               onClick={() => {
@@ -481,62 +504,118 @@ class AsideMenu extends React.Component {
         );
     });
   }
-  renderProjectList() {
-    const { projectList = [], onTopProject, onSwitchProject } = this.props;
-    // const { currentUser } = this.props;
-    // if (!currentUser || !currentUser.organizeIds || currentUser.isSystem) {
-    //   return null;
-    // }
+  // renderMathAppList(searchProjectKey, projects) {
+  //   const { onSwitchProject } = this.props;
+  //   let appList = null;
+  //   if (Array.isArray(projects)) {
+  //     appList = [];
+  //     projects.forEach((appItem) => {
+  //       if (searchProjectKey && appItem.name.toLowerCase().indexOf(searchProjectKey) < 0) {
+  //         return null;
+  //       }
+  //       appList.push(
+  //         <TreeNode
+  //           key={appItem.id}
+  //           title={<a
+  //             href="javascript:void(0);"
+  //             className="project-item"
+  //             onClick={() => {
+  //               onSwitchProject && onSwitchProject(appItem);
+  //             }}
+  //           >
+  //           {appItem.name}
+  //           </a>}
+  //         />
+  //       );
+  //     });
+  //   }
+  //   return appList;
+  // }
+  getProjectMenu() {
+    return [
+      <Menu.Item
+        key="p-1"
+        className="link-create-project"
+        onClick={() => {
+          this.props.history.push('/projectList#cr');
+          setTimeout(() => {
+            const btnAddGroup = document.querySelector('#btn-add-group');
+            if (btnAddGroup) {
+              btnAddGroup.click();
+            }
+          }, 0);
+        }}
+      >
+        +&nbsp;创建项目
+      </Menu.Item>,
+      <Menu.Item
+        key="p-2"
+        className="link-project-list"
+        onClick={() => {
+          this.props.history.push('/projectList');
+        }}
+      >
+        查看所有项目
+        <Icon type="right" style={{ color: '#BFBFBF', fontSize: '10px' }} />
+      </Menu.Item>
+    ];
+  }
+  /**
+   * @desc 渲染常用应用列表
+   */
+  renderComUseAppList() {
+    // const { projectOpenKeys, searchProjectKey } = this.state;
+    const { commonUseAppList = [], currentComUseApp, onSwitchComUseApp, onCancelComUseApp } = this.props;
+    const selectComUseAppId = Array.isArray(commonUseAppList) && commonUseAppList.length > 0 && currentComUseApp && currentComUseApp.id;
+    const pMenus = this.getProjectMenu();
     return (
-      <Menu className="fl-project-list">
-        {
-          projectList.slice(0, 6).map((item) => {
-            return (
-              <Menu.Item key={item.id}>
-                <a
-                  href="javascript:void(0);"
-                  className="project-item"
+      <div
+        className="project-group-box"
+      >
+        <Menu className="com-use-app-list">
+          {
+            Array.isArray(commonUseAppList) ? [...commonUseAppList.map((item) => {
+              return (
+                <Menu.Item
+                  value={item.id}
+                  key={item.id}
+                  className={selectComUseAppId === item.id ? 'active' : 'normal'}
                   onClick={() => {
-                    onSwitchProject && onSwitchProject(item);
+                    onSwitchComUseApp(item);
                   }}
                 >
-                  {item.name}
-                  {/* <Icon
-                    type="pushpin"
-                    title="置顶"
+                  <span>{item.name}</span>
+                  <Icon
+                    type="minus-circle"
+                    title="取消常用"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onTopProject && onTopProject(item);
+                      onCancelComUseApp(item);
                     }}
-                  /> */}
-                </a>
-              </Menu.Item>
-            );
-          })
-        }
-        <Menu.Item className="link-create-project">
-          <a onClick={() => { this.props.history.push('/#cr'); }}>+&nbsp;创建项目</a>
-        </Menu.Item>
-        <Menu.Item className="link-project-list">
-          <a className="project-item" onClick={() => { this.props.history.push('/'); }}>
-            查看所有项目
-            <Icon type="right" style={{ color: '#BFBFBF', fontSize: '10px' }} />
-          </a>
-        </Menu.Item>
-      </Menu>
+                  />
+                </Menu.Item>
+              );
+            }), ...pMenus] : pMenus
+          }
+        </Menu>
+      </div>
     );
   }
   renderSiderBarContent() {
-    const { companyList, currentCompany } = this.state;
-    const { currentProject } = this.props;
+    const { companyList, currentCompany, projectTreeVisiable } = this.state;
+    const { currentComUseApp } = this.props;
     const { clientId } = window.configs;
     if (clientId === '10000160') { // 研发项目管理
-      const projectName = currentProject && currentProject.name;
+      const currentComUseAppName = currentComUseApp && currentComUseApp.name;
       return (
-        <Dropdown overlay={this.renderProjectList()}>
+        <Dropdown
+          // visible={projectTreeVisiable}
+          overlay={this.renderComUseAppList()}
+          // onVisibleChange={this.handleVisibleChange}
+        >
           <a className="company-dropdown-link" href="javascript:void(0);">
-            <span className="company-name current-project-name" title={projectName}>
-              {projectName}
+            <span className="company-name current-project-name" title={currentComUseAppName}>
+              {currentComUseAppName}
             </span>
             <Icon
               component={arrow}
@@ -607,7 +686,7 @@ class AsideMenu extends React.Component {
           </Scrollbars>
         </ul>
         <div className="app-menu-box">
-          <div className="menu-header">
+          <div className="menu-header" title={selectAppName}>
             {selectAppName}
           </div>
           <div style={{

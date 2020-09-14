@@ -7,13 +7,13 @@ import createHistory from 'history/createBrowserHistory';
 // import createLoading from 'dva-loading';
 import dynamic from 'dva/dynamic';
 import Flayout from '../component/fulu';
-import config from './config';
+import config from '../../src/component/fulu/cfg';
 import Page403 from '../component/fulu/error/Page403';
 import { LocaleProvider } from 'antd';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 
 const { ConnectedRouter } = routerRedux;
-
+window.configs = config;
 const RouterWrapper = ({ history, app }) => {
     const CustomManageZone = dynamic({
         app,
@@ -34,7 +34,7 @@ const RouterWrapper = ({ history, app }) => {
     };
     const Authen = () => {
         return (
-            <div>authen</div>
+        <div>authen, {a}</div>
         );
     };
     const Home = () => {
@@ -73,14 +73,18 @@ const RouterWrapper = ({ history, app }) => {
         </ConnectedRouter>
     );
 };
-// 1. Initialize
+window.monitorOpen = true; // 开启埋点
+window.monitorConfig = { // 不必填
+    selectors: ['.ant-btn-primary', 'button'], // 自定义的选择器，命中这些选择器的节点数据会上报
+    menuVisit: true, // 是否收集菜单点击事件，默认为true
+    errorCatch: true, // 是否收集异常信息，包括接口、资源加载、js运行异常，默认为true
+};
 const app = dva({
     history: createHistory(),
-    onError(e, dispatch) {
+    onError(e) {
         message.error(e.message, 3);
     },
 });
-// app.use(createLoading());
 app.router(RouterWrapper);
 app.start('#app');
 

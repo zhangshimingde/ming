@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import ErrorBoundary from '../../ErrorBoundary';
 
 @withRouter
 class TabComponent extends React.Component {
@@ -26,8 +27,8 @@ class TabComponent extends React.Component {
     // }
 
     shouldComponentUpdate(nextProps) {
-        const { component, isShow, companyList, projectList,
-            hash, currentProject, projectLoading } = this.props;
+        const { component, isShow, companyList, commonUseAppList, menuList, 
+            hash, currentComUseApp, fetchComUseAppLoading } = this.props;
         if (component !== nextProps.component) {
             return true;
         }
@@ -37,13 +38,16 @@ class TabComponent extends React.Component {
         if (isShow !== nextProps.isShow) {
             return true;
         }
-        if (projectList !== nextProps.projectList) {
+        if (menuList !== nextProps.menuList) {
             return true;
         }
-        if (currentProject !== nextProps.currentProject) {
+        if (commonUseAppList !== nextProps.commonUseAppList) {
             return true;
         }
-        if (projectLoading !== nextProps.projectLoading) {
+        if (currentComUseApp !== nextProps.currentComUseApp) {
+            return true;
+        }
+        if (fetchComUseAppLoading !== nextProps.fetchComUseAppLoading) {
             return true;
         }
         if (companyList.length !== nextProps.companyList.length) {
@@ -77,7 +81,9 @@ class TabComponent extends React.Component {
                 className="tab-page-container"
                 style={styleObj}
             >
-                {React.cloneElement(component, { ...restProps, isShow })}
+                <ErrorBoundary refreshByRouter>
+                    {React.cloneElement(component, { ...restProps, isShow })}
+                </ErrorBoundary>
             </div>
         );
     }

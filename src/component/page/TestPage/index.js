@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Alert } from 'antd';
+// import { Spin, Alert, Table } from 'antd';
 import moment from 'moment';
 import Table from '../../widget/Table';
 // import Table from '../../widget/DragSortTable';
@@ -12,6 +12,7 @@ import ScrollNumber from '../../widget/ScrollNumber';
 import TurnNumber from '../../widget/TurnNumber';
 import DivideScrollNumber from '../../widget/ScrollNumber/DivideScrollNumber';
 import columns from './tableColumn';
+import { Button } from 'antd';
 // import columns from './fixTableColumn';
 // import columns from './bugColumn';
 
@@ -20,9 +21,9 @@ for (let i = 0; i < 24; i++) {
     dataSource.push({
         key: i.toString(),
         proInfoId: 'RW-2019080515541972720190805155419727',
-        name: i < 9 ?  `name ${i}` : `EdrwardEdrwardEdrward ${i}`,
+        name: i < 9 ?  `name ${i}` : `EdrwaEdrward ${i}`,
         sex: '1',
-        age: null,
+        age: i,
         date: '2019-08-08',
         address: `London Park no. ${i}`,
     });
@@ -131,6 +132,9 @@ class TestPage extends React.Component {
         const yearStr = `${year}`;
         return (
             <div style={{ padding: '24px', height: '100%' }}>
+                {
+                    this.state.a.length > 0 ? <span>1</span> : null
+                }
                 {/* <p style={{ margin: '30px', fontSize: '30px' }}>
                     <ScrollNumber value={count} height="42px" initalValue="0" duration={1000} delay={0} />
                 </p> */}
@@ -205,27 +209,31 @@ class TestPage extends React.Component {
                             });
                         }}
                     >waveButton</WaveButton>
-                    <WaveButton type="primary">Primary</WaveButton>
+                    <WaveButton type="primary" data-mid="btn-a">Primary</WaveButton>
                     <WaveButton type="dashed">Dashed</WaveButton>
                     <WaveButton type="danger">Danger</WaveButton>
                     <WaveButton type="link">Link</WaveButton>
-                    {/* <ExportButton
+                    <ExportButton
                         url="http://10.0.1.68:3001/api/Stock/ExportCardBatchInfo"
                         merchantId="39e93568-81ae-638f-3e99-3ea303694d82"
                         // method="GET"
+                        beforeClick={() => {
+                            return false;
+                        }}
                         params={{
                             BeginTime: '2019/08/14 00:00:00',
                             EndTime: '2019/08/14 23:59:59',
                             IsSoldOut: '',
                         }}
+                        linkTag
                         fileName="卡密"
-                    >导出</ExportButton> */}
+                    >导出</ExportButton>
                     {/* <Button onClick={this.onUpdateColumns}>update columns</Button> */}
                 </div>
                 <Table
                     dataSource={dataSource}
                     pagination={pagination}
-                    columnShowSetRef={this.columnsBtn} // columns显示设置
+                    // columnShowSetRef={this.columnsBtn} // columns显示设置
                     lastColumnNoWidth
                     emptyNoScrollBar
                     // editOnRow={{ // 行编辑
@@ -233,19 +241,19 @@ class TestPage extends React.Component {
                     //     onEditSave: this.onEditSave, // 编辑保存回调事件
                     //     // useIcon: true, // 编辑、保存、取消三个操作项是否使用图标
                     // }}
-                    quickAddRow={{
-                        onAddSave: this.onAddSave, // 保存回调
-                        addBtnText: '+快速创建', // 新增按钮显示文字，默认'+快速创建'
-                        columns: [{ // 新增行的表单配置列表，默认取table的columns作为入参，也可以自己定义新增项
-                            dataIndex: 'title',
-                            editable: true,
-                            editType: 'Input',
-                            placeholder: '请输入标题',
-                            rules: [{
-                                required: true, message: '请输入标题',
-                            }],
-                        }]
-                    }}
+                    // quickAddRow={{
+                    //     onAddSave: this.onAddSave, // 保存回调
+                    //     addBtnText: '+快速创建', // 新增按钮显示文字，默认'+快速创建'
+                    //     columns: [{ // 新增行的表单配置列表，默认取table的columns作为入参，也可以自己定义新增项
+                    //         dataIndex: 'title',
+                    //         editable: true,
+                    //         editType: 'Input',
+                    //         placeholder: '请输入标题',
+                    //         rules: [{
+                    //             required: true, message: '请输入标题',
+                    //         }],
+                    //     }]
+                    // }}
                     rowSelection={{
                         type: 'checkbox',
                         getCheckboxProps: () => {

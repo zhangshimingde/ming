@@ -156,7 +156,9 @@ class SearchForm extends React.PureComponent {
         placeholder={item.placeholder || `请输入${item.label}`} maxLength={item.maxLength || 1000} />
       return <Input placeholder={item.placeholder || `请输入${item.label}`} maxLength={item.maxLength || 1000} />;
     } else if (item.type === 'Select') {
+      const { type, ...resetProps } = item;
       return (<Select
+        {...resetProps}
         onChange={item.change}
         showSearch={item.showSearch}
         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}

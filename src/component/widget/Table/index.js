@@ -29,11 +29,14 @@ class Table extends BaseTable {
             updateColumns: false,
             tbSizeBig: props.tableDefaultSize !== 'small', // 表格显示为大尺寸的标识
         };
+        this.resizeTimer = null;
         this.tbRef = React.createRef();
-        this.onValidateFields = this.onValidateFields.bind(this);
+        this.tbWrapperRef = React.createRef();
+        this.onWinResize = this.onWinResize.bind(this);
         this.onColumnShowSet = this.onColumnShowSet.bind(this);
-        this.handleChangeColumns = this.handleChangeColumns.bind(this);
+        this.onValidateFields = this.onValidateFields.bind(this);
         this.handleTbSizeChange = this.handleTbSizeChange.bind(this);
+        this.handleChangeColumns = this.handleChangeColumns.bind(this);
         this.handleHideColSetModal = this.handleHideColSetModal.bind(this);
     }
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -63,6 +66,12 @@ class Table extends BaseTable {
         if (typeof this.props.onValidateFunc == 'function') {
             this.props.onValidateFunc(this.onValidateFields);
         }
+        if (this.props.ellipsis && this.props.scroll
+            && this.props.scroll.x && this.tbWrapperRef.current) {
+                this.resizeTag = true;
+                this.onWinResize(true);
+                window.addEventListener('resize', this.onWinResize);
+        }
     }
     componentDidUpdate() {
         if (this.state.updateColumns) {
@@ -71,8 +80,63 @@ class Table extends BaseTable {
         this.setClickToColumnShowBtn();
     }
     componentWillUnmount() {
+        if (this.resizeTag) {
+            window.removeEventListener('resize', this.onWinResize);
+            if (this.resizeTimer) {
+                clearTimeout(this.resizeTimer);
+            }
+        }
         this.setClickToColumnShowBtn(true);
     }
+    onWinResize(noDelay = false) {
+        if (this.resizeTimer) {
+            clearTimeout(this.resizeTimer);
+        }
+        if (noDelay) {
+            this.execResize();
+        } else {
+            this.resizeTimer = setTimeout(() => {
+               this.execResize();
+            }, 200);
+        }
+    }
+    execResize() {
+        const $tbWrapper = this.tbWrapperRef.current;
+        const isShowScrollX = $tbWrapper.clientWidth < this.props.scroll.x;
+        Array.from($tbWrapper.querySelectorAll('.ant-table-body')).forEach((tb) => {
+            if (isShowScrollX) {
+                tb.style.overflowX = 'scroll';
+            } else {
+                tb.style.overflowX = 'auto';
+            }
+        });
+        const $fixedLeftTb = $tbWrapper.querySelector('.ant-table-fixed-left table');
+        const { columns, rowSelection } = this.props;
+        if ($fixedLeftTb) {
+            const leftLen = $fixedLeftTb.querySelectorAll('thead th').length;
+            $fixedLeftTb.style.width = `${this.calcFixedTbWidth(0, leftLen - 1)}px`;
+        }
+        const $fixedRightb = $tbWrapper.querySelector('.ant-table-fixed-right table');
+        if ($fixedRightb) {
+            let rightLen = $fixedRightb.querySelectorAll('thead th').length;
+            if (rowSelection) {
+                rightLen = rightLen - 1;
+            }
+            $fixedRightb.style.width = `${this.calcFixedTbWidth(columns.length - rightLen, columns.length - 1)}px`;
+        }
+    }
+    calcFixedTbWidth(start, end) {
+        const $tbWrapper = this.tbWrapperRef.current;
+        const thArrLike = $tbWrapper.querySelectorAll('.ant-table-scroll thead th');
+        let totalWidth = 0;
+        for (let i = start; i <= end; i++) {
+            if (thArrLike[i]) {
+                totalWidth += thArrLike[i].offsetWidth;
+            }
+        }
+        return totalWidth;
+    }
+
     /**
      * @desc 设置表格列显示按钮点击事件
      * @param {*boolean} removeClick 是否移除click事件
@@ -323,6 +387,9 @@ class Table extends BaseTable {
         if (!this.props.bigPadding) {
             clsArr.push('small-padding');
         }
+        if (this.props.ellipsis) {
+            clsArr.push('fl-tb-ellipsis');
+        }
         const clsName = clsArr.join(' ');
         if (!this.props.flCustomRender) {
             newTbProps.components = this.tbComponents;
@@ -369,7 +436,7 @@ class Table extends BaseTable {
             };
         }
         return (
-            <div className={clsName}>
+            <div className={clsName} ref={this.tbWrapperRef}>
                 {
                     this.editable ? (<EditableContext.Provider value={this.props.form}>
                              {this.renderTable(newTbProps)}

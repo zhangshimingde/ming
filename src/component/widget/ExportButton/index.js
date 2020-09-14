@@ -32,6 +32,17 @@ class ExportButton extends React.PureComponent {
         });
     }
     onClick() {
+        const { beforeClick } = this.props;
+        const { loading } = this.state;
+        if (loading) {
+            return;
+        }
+        if (typeof beforeClick === 'function') { // 执行下载前的回调函数
+            const validateResult = beforeClick();
+            if (!validateResult) { // 校验回调返回false，停止执行
+                return;
+            }
+        }
         const access_token = localStorage.getItem('access_token');
         if (!access_token) {
             message.warn('获取token失败');
@@ -115,7 +126,14 @@ class ExportButton extends React.PureComponent {
     }
     render() {
         const { loading } = this.state;
-        const { merchantId, fileName, ...rest } = this.props;
+        const { merchantId, fileName, linkTag = false, ...rest } = this.props;
+        if (linkTag) {
+            return (
+                <a {...rest} onClick={this.onClick}>
+                    {this.props.children}
+                </a>
+            );
+        }
         return (
             <Button {...rest} onClick={this.onClick} loading={loading}>
                 {this.props.children}

@@ -126,7 +126,7 @@ const configs = {
         css: path.join(__dirname, 'src/assets', 'sprite.less'), // 生成的css/less
       },
       apiOptions: {
-        cssImageRef: './sprite.png', // css文件中引用雪碧图的相对位置路径配置
+        cssImageRef: '~sprite.png', // css文件中引用雪碧图的相对位置路径配置
       },
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -140,8 +140,12 @@ const configs = {
     modules: ["node_modules", "assets"],
     alias: { // 通过别名来把原来导入路径映射成一个新的导入路径
       component: path.resolve(__dirname, 'src/component'),
+      // moment: "moment/moment.js",
     }
   },
+  // externals: {
+  //   'fl-pro': 'flPro',
+  // },   
 };
 
 if (npmScriptName === 'start-fulu') {

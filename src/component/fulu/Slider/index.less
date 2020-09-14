@@ -5,7 +5,7 @@
         white-space: nowrap;
         animation: fadeInLeft 500ms linear;
     }
-    .white-icon {
+    .white-icon, .img-icon {
         margin-right: 10px;
     }
     @keyframes fadeInLeft {
@@ -18,7 +18,19 @@
             opacity: 1;
         }
     }
-
+    .menu-expand-btn {
+        position: absolute;
+        font-size: 18px;
+        bottom: 5px;
+        right: 5px;
+        cursor: pointer;
+        transition: color .3s;
+        color: #9fa7ae;
+        &:hover {
+            background: #121b24;
+            color: #ffffff;
+        }
+    }
     .menu-container {
         position: absolute;
         left: 0;
@@ -39,6 +51,21 @@
             top: 6px;
             margin-right: 10px;
         }
+        .img-icon {
+            margin-right: 10px;
+        }
     }
-    
+    .ant-menu-sub.ant-menu-inline > .ant-menu-item,
+    .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title,
+    .ant-menu-vertical > .ant-menu-submenu > .ant-menu-submenu-title {
+        line-height: 40px;
+        height: 40px;
+    }
+    .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title,
+    .ant-menu-inline-collapsed > .ant-menu-item {
+        padding: 0 24px !important;
+    }
+    .ant-menu-inline-collapsed {
+        width: 64px;
+    }
 }

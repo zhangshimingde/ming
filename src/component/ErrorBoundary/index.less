@@ -1,0 +1,33 @@
+.error-boundary-wrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    .error-bg {
+        width: 400px;
+        height: 300px;
+        background-image: url(./error.png);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .tips-box {
+        text-align: center;
+        .error-bg {
+            display: inline-block;
+        }
+        .tips {
+            font-size: 16px;
+            margin-right: 10px;
+            color: #ff5050;
+            font-weight: bold;
+        }
+    }
+    .error-log-box {
+        margin-top: 20px;
+        background: #000;
+        color: #fff;
+        padding: 10px;
+    }
+}

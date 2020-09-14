@@ -15,10 +15,16 @@ import ExportButton from './ExportButton';
 import QueueAnimFulu from './QueueAnimFulu';
 import BreadCrumb from './BreadCrumb';
 import FuluIcon from './FuluIcon';
+import Confirm from './Confirm';
+import Copy from './Copy';
+import Popover from './Popover';
 import TradeValidateWrap from './TradeValidateWrap';
 import WangEditor from './WangEditor';
 import WaveButton from './WaveButton';
+import WebMonitor from './WebMonitor';
 import ScrollNumber from './ScrollNumber';
+import BraftEditor from './BraftEditor';
+import SimpleTable from './SimpleTable';
 import DivideScrollNumber from './ScrollNumber/DivideScrollNumber';
 
 export {
@@ -28,6 +34,10 @@ export {
     DropPanel,
     Tabs,
     Table,
+    Copy,
+    Popover,
+    Confirm,
+    WebMonitor,
     DragSortTable,
     AddOrEditForm,
     SearchForm,
@@ -43,5 +53,7 @@ export {
     WangEditor,
     ScrollNumber,
     WaveButton,
+    BraftEditor,
+    SimpleTable,
     DivideScrollNumber,
 };

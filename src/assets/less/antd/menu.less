@@ -1,0 +1,28 @@
+.menuMargin() {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.myslider {
+    .ant-menu-inline .ant-menu-item {
+        .menuMargin;
+    }
+    .ant-menu-submenu.ant-menu-submenu-inline {
+        .ant-menu-submenu-title {
+            .menuMargin;
+        }
+    }
+    .menu-expand-btn {
+        position: absolute;
+        font-size: 18px;
+        bottom: 5px;
+        right: 5px;
+        // padding: 0 24px;
+        cursor: pointer;
+        transition: color .3s;
+        color: #9fa7ae;
+        &:hover {
+            background: #121b24;
+            color: #ffffff;
+        }
+    }
+}

@@ -8,7 +8,7 @@ import React from 'react';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { DropPanel } from '../../widget';
+import DropPanel from '../../widget/DropPanel';
 import fav from './images/fav.svg';
 
 class Favs extends React.Component {

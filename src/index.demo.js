@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TestPage from './component/page/TestPage';
+// import UIPage from './component/page/UIPage';
+import UI3Page from './component/page/UI3Page';
+// import SearchFormPage from './component/page/SearchFormPage';
 
-ReactDOM.render(<TestPage />, document.querySelector('#app'));
+ReactDOM.render(<UI3Page />, document.querySelector('#app'));

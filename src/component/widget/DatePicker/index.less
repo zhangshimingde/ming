@@ -1,0 +1,75 @@
+.ant-calendar-time .ant-calendar-footer-btn,
+.ant-calendar-footer-btn {
+    padding-top: 12px;
+    padding-bottom: 10px;
+    .ant-calendar-ok-btn {
+        line-height: 32px !important;
+        height: 32px !important;
+        min-width: 74px;
+    }
+    a {
+        vertical-align: top;
+        line-height: 32px;
+    }
+}
+.custom-picker-wrapper {
+    .ant-calendar-footer-btn:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+    .fl-range-footer {
+        display: block;
+        &>span {
+            vertical-align: top;
+            line-height: 36px;
+        }
+        .ant-time-picker-input {
+            height: 32px !important;
+        }
+        .ant-time-picker-clock-icon {
+            display: none;
+        }
+        .ant-row {
+            display: inline-block;
+            margin-bottom: 0;
+        }
+        button {
+            position: absolute;
+            min-width: 74px;
+            top: 14px;
+        }
+        .btn-today {
+            right: 92px;
+        }
+        .btn-ok {
+            right: 12px;
+        }
+        transition: opacity 1000ms linear;
+        &.hidden {
+            opacity: 0;
+        }
+        .ant-form-item-control .ant-form-explain {
+            position: absolute;
+            font-size: 12px;
+            bottom: 32px;
+        }
+    }
+    .ant-calendar-time .ant-calendar-footer .ant-calendar-time-picker-btn {
+        display: none;
+    }
+    .ant-calendar-time .ant-calendar-footer-btn .ant-calendar-ok-btn {
+        display: none;
+    }
+    .ant-calendar-range-quick-selector {
+        display: none;
+    }
+}
+.fl-range-footer {
+    display: none;
+}
+.custom-range-time-picker {
+    .ant-time-picker-panel-clear-btn {
+        display: none;
+    }
+}

@@ -1,24 +1,16 @@
-import dynamic from 'dva/dynamic';
 import { RouteWithLayout } from './component/layout';
 import fulu, { handleErrCallBack, handleErrNavCallBack } from './component/fulu';
-import { Table, DragSortTable, AddOrEditForm, SearchForm, CommonPage, DatePicker, ExportButton, Select, Button, WaveButton,
-    QueueAnimFulu, BreadCrumb, WangEditor, FuluIcon, TradeValidateWrap, ScrollNumber, DivideScrollNumber } from './component/widget';
+import { Table, DragSortTable, AddOrEditForm, SearchForm, CommonPage, DatePicker, ExportButton,
+    Select, Button, WaveButton, QueueAnimFulu, BreadCrumb, WangEditor, FuluIcon, TradeValidateWrap,
+    ScrollNumber, DivideScrollNumber, Confirm, Copy, Popover, BraftEditor } from './component/widget';
+import FLayout from './FLayout';
 import { icons } from './component/images';
 import PublicLayout from './model/PublicLayout';
+// import './assets/less/cdn.less';
 // import './assets/less/common.less';
 // import './assets/less/antd/antCommon.less';
 
-import React from 'react';
-
 export default RouteWithLayout;
-
-const FLayout = (app, home) => {
-    React.homePage = home;
-    return dynamic({
-        app,
-        component: () => { return import('./component/layout/FLayout'); },
-    });
-};
 
 export {
     Table,
@@ -28,6 +20,8 @@ export {
     handleErrNavCallBack,
     DragSortTable,
     FLayout,
+    Copy,
+    Popover,
     ExportButton,
     PublicLayout,
     AddOrEditForm,
@@ -35,6 +29,7 @@ export {
     CommonPage,
     DatePicker,
     Select,
+    Confirm,
     Button,
     icons,
     QueueAnimFulu,
@@ -43,5 +38,6 @@ export {
     TradeValidateWrap,
     WangEditor,
     ScrollNumber,
+    BraftEditor,
     DivideScrollNumber,
 };

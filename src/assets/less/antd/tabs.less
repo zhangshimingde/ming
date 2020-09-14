@@ -1,25 +1,33 @@
-// tab切换
-.ant-tabs-nav .ant-tabs-tab {
-    padding: 14px 16px;
-}
-
-.ant-tabs-tab-active {
-    color: @link-color;
-}
-
-.ant-tabs-ink-bar {
-    background-color: @btn-primary-color;
-}
-
-.ant-tabs-nav .ant-tabs-tab:hover {
-    color: @link-color;
-}
-
-.ant-tabs-bar {
-    margin: 0px ;
-    border-bottom: 1px solid @border-bottom-color;
-}
-
-.ant-tabs-card-bar {
-    margin-top: 20px ;
+.fulu-wrapper {
+    .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
+        border-color: @borderColor;
+        background: #f8f8f8;
+        color: @fontColor;
+        border-radius: 0;
+        &:before {
+            position: absolute;
+            content: '';
+            height: 4px;
+            width: 100%;
+            left: 0;
+            background: transparent;
+        }
+        &.ant-tabs-tab-active {
+            background: #fff;
+            &:before {
+                background: @primaryColor;
+            }
+        }
+    }
+    .ant-tabs-nav {
+        .ant-tabs-tab {
+            padding: 9px 0;
+            &::before {
+                border-radius: 0 !important;
+            }
+        }
+        .ant-tabs-tab-active {
+            font-weight: 600;
+        }
+    }
 }

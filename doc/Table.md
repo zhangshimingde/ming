@@ -1,34 +1,34 @@
 #### 1.Table
 
-|           属性     |说明                         |类型|
-|----------------|-------------------------------|-----------------------------|
-|maxShow|表格可见的数据行数量            |number          |
-|fillHeight|是否填充表格高度(当数据较少时使用空白数据撑开表格高度)，默认为false           |boolean           |
-|sizeChange|是否可以切换表格大小，默认为false           |boolean           |
-|pagination.handleUpdate|刷新表格回调函数,设置成函数之后表格右下角会有刷新图标|(pageIndex, pageSize) => {}|
-|columnShowSetRef|设置表格列头显示与隐藏的触发控件节点对象，一般是按钮或者图标，具体使用参照示例1|DOM/ReactNode|
-|footerExtra|设置表格额外的数据行，可用作表格底部的统计，具体使用参照示例2|array|
-|editOnRow|行编辑的配置选项，目前支持InputNumber、Input、Select三种组件编辑模式，具体使用参照示例3|object|
-|tableDefaultSize|指定默认的表格大小，选项为big/small，默认为big|string|
-|flCustomRender|默认false，当需要自定义table的components属性时设置为true|boolean|
-|quickAddRow|快速创建数据行配置项,目前支持Input/Select/DatePicker三种组件编辑,具体使用参数示例4|object|
-|lastColumnNoWidth|最后一列是否有width属性，在动态设置表格列的时候可以使用该属性，保证列宽度符合预期(操作列不属于最后一列)默认false|boolean|
-|emptyNoScrollBar|当表格没有数据时，是否隐藏滚动条，默认false|boolean|
-|bigPadding|是否启用单元格大间距(左右15px,不启用则是8px)，默认false|boolean|
-|onValidateFunc|验证所有可编辑单元格的回调函数|function|
+|           属性     |说明                         |类型|版本|
+|----------------|-------------------------------|-----------------------------|--------------|
+|maxShow|表格可见的数据行数量            |number          ||
+|fillHeight|是否填充表格高度(当数据较少时使用空白数据撑开表格高度)，默认为false           |boolean           ||
+|sizeChange|是否可以切换表格大小，默认为false           |boolean           ||
+|pagination.handleUpdate|刷新表格回调函数,设置成函数之后表格右下角会有刷新图标|(pageIndex, pageSize) => {}||
+|columnShowSetRef|设置表格列头显示与隐藏的触发控件节点对象，一般是按钮或者图标，具体使用参照示例1|DOM/ReactNode||
+|footerExtra|设置表格额外的数据行，可用作表格底部的统计，具体使用参照示例2|array||
+|editOnRow|行编辑的配置选项，目前支持InputNumber、Input、Select三种组件编辑模式，具体使用参照示例3|object||
+|tableDefaultSize|指定默认的表格大小，选项为big/small，默认为big|string||
+|flCustomRender|默认false，当需要自定义table的components属性时设置为true|boolean||
+|quickAddRow|快速创建数据行配置项,目前支持Input/Select/DatePicker三种组件编辑,具体使用参数示例4|object||
+|lastColumnNoWidth|最后一列是否有width属性，在动态设置表格列的时候可以使用该属性，保证列宽度符合预期(操作列不属于最后一列)默认false|boolean||
+|emptyNoScrollBar|当表格没有数据时，是否隐藏滚动条，默认false|boolean||
+|bigPadding|是否启用单元格大间距(左右15px,不启用则是8px)，默认false|boolean||
+|onValidateFunc|验证所有可编辑单元格的回调函数|function||
+|ellipsis|设置表格所有文字超过列宽是否隐藏显示，默认false|boolean|1.8.62|
+
 *说明：
 
 1.兼容antd中的所有属性;
 
 2.操作列如果不加width，默认会设置成109px的宽度；
 
-3.在表格列配置(columns)中加入nowrap:  true属性，数据项将不会换行，超过宽度将省略显示；
+3.序号列请加上className:  'sort-cell'和sortIndex：true属性；
 
-4.序号列请加上className:  'sort-cell'和sortIndex：true属性；
+4.在表格列配置(columns)中可以设置showToolTip是否显示ToolTip，默认为false;
 
-5.在表格列配置(columns)中可以设置showToolTip是否显示ToolTip，默认为false;
-
-6.针对小数位显示，可以通过配置项进行统一处理，在columns列中配置decimal字段，类型为对象(object)或者数值(number)，如下:
+5.针对小数位显示，可以通过配置项进行统一处理，在columns列中配置decimal字段，类型为对象(object)或者数值(number)，如下:
 ```
 decimal: {
             length: 2, // 小数位保留长度

@@ -13,7 +13,44 @@
     }
 }
 
+.ellipsis() {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .fulu-table, .drag-sort-table {
+    .ant-select-selection--single {
+        height: auto;
+    }
+    &.fl-tb-ellipsis {
+        table {
+            table-layout: fixed;
+            thead {
+                th {
+                    .ellipsis;
+                }
+                .ant-table-column-title {
+                    .ellipsis;
+                    display: block;
+                }
+            }
+            tbody {
+                td {
+                    .ellipsis;
+                }
+            }
+        }
+    }
+    .text-ellipsis {
+        max-width: 100%;
+        .ellipsis;
+        display: inline-block;
+        vertical-align: top;
+    }
+    tbody {
+        color: #333;
+    }
     &.small-table {
         .ant-table-small {
             .ant-table-content {
@@ -35,14 +72,14 @@
             .ant-table-content {
                 .ant-table-thead tr {
                     th {
-                        padding: 10px 8px 9px !important;
+                        padding: 10px 12px 9px !important;
                     }
                 }
                 .ant-table-body tbody,
                 .ant-table-fixed tbody {
                     tr {
                         td {
-                            padding: 10px 8px 9px !important;
+                            padding: 10px 12px 9px !important;
                         }
                     }
                 }
@@ -169,8 +206,8 @@
     .ant-table-thead>tr>th {
         color: #666;
         font-family: PingFangSC-Semibold;
-        font-weight: 600;
-        background-color: #FAFBFC !important;
+        font-weight: 500;
+        background-color: @garyTable !important;
     }
     .ant-select-selection-selected-value {
         padding-right: 20px;
@@ -184,28 +221,28 @@
         tr:hover:not(.ant-table-expanded-row),
         tr.ant-table-row-hover:not(.ant-table-expanded-row) {
             &>td {
-                background: #f4f4f4;
+                background: @garyTable;
             }
         }
 
         tr.ant-table-row-selected td,
         tr.ant-table-row-selected:hover td {
-            background: #edf3f9;
+            background: @garyTable;
         }
     }
 
     .ant-pagination.mini {
-
         .ant-pagination-prev,
         .ant-pagination-next {
+            margin: 0 4px;
             width: 16px;
             height: 16px;
             line-height: 16px;
             min-width: 16px;
-
+            position: relative;
+            top: 2px;
             .anticon {
                 vertical-align: initial;
-                transform: scale(0.6);
             }
         }
     }
@@ -222,18 +259,6 @@
 
     .cancel_svg__st0 {
         fill: #ee4010;
-    }
-
-    .ant-pagination-item a {
-        color: #cccccc !important;
-    }
-
-    .ant-pagination-item-active {
-        border-color: transparent;
-
-        a {
-            color: #333333 !important;
-        }
     }
 
     .editable-row:hover .editable-cell-value-wrap {
@@ -366,7 +391,7 @@
         }
 
         .cell-nowrap {
-            width: 100%;
+            max-width: 100%;
             white-space: nowrap;
             display: inline-block;
             overflow: hidden;
@@ -375,17 +400,9 @@
         }
     }
 
-    .ant-pagination-item {
-        &:hover {
-            color: #3270FF !important;
-            a {
-                color: inherit !important;
-            }
-        }
-    }
-
     .page-total {
-        margin-left: 20px;
+        margin-left: 8px;
+        color: rgba(0,0,0,0.65);
     }
     
     .ant-table-pagination {
@@ -397,12 +414,15 @@
                 float: right;
                 line-height: @basicHeight;
                 margin-right: 0;
+                margin-top: 3px;
             }
 
             .ant-pagination-item {
                 border-radius: 4px;
                 overflow: hidden;
-
+                min-width: 30px;
+                height: 30px;
+                line-height: 30px;
                 a {
                     padding-left: 0 !important;
                     padding-right: 0 !important;
@@ -410,24 +430,18 @@
 
                 &.ant-pagination-item-active {
                     a {
-                        color: #333333 !important;
-                        background: inherit;
-                    }
-
-                    &:focus {
-                        a {
-                            color: #333333 !important;
-                        }
+                        color: #fff;
+                        background: @primaryColor;
                     }
                 }
             }
         }
 
-        .ant-input .ant-select-selection__rendered,
-        .ant-select .ant-select-selection .ant-select-selection__rendered {
-            height: 24px !important;
-            line-height: 24px !important;
-        }
+        // .ant-input .ant-select-selection__rendered,
+        // .ant-select .ant-select-selection .ant-select-selection__rendered {
+        //     height: 24px !important;
+        //     line-height: 24px !important;
+        // }
     }
 
     .tb-update {
@@ -478,13 +492,14 @@
 
     .ant-input,
     .ant-select .ant-select-selection {
-        height: @basicHeight;
-        line-height: @basicHeight;
+        // height: @basicHeight;
+        // line-height: @basicHeight;
         font-size: 95%;
         background-color: #fff;
         border-radius: 4px;
         border: 1px solid #d9d9d9;
         border-top-width: 1.02px;
+        box-shadow: none;
         .ant-select-selection__rendered {
             height: @basicHeight;
             line-height: @basicHeight;
@@ -494,7 +509,7 @@
         .ant-select-arrow {
             color: rgba(0, 0, 0, 0.25) !important;
             margin-right: -4px;
-            margin-top: -5px;
+            margin-top: -8px;
         }
     }
 
@@ -532,23 +547,9 @@
 
 .ant-pagination.mini .ant-pagination-options-quick-jumper {
     float: left;
-    margin-left: 20px;
-    margin-top: 1px;
-    margin-right: 20px;
-
-    input {
-        line-height: inherit;
-        height: inherit;
-        background: @input-background-color;
-        border: 1px solid @input-background-color;
-        .rounded-corners;
-        color: @normal-color;
-
-        &:hover {
-            border: 1px solid @out-border-color;
-        }
-
-    }
+    line-height: 26px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .drag-sort-table tr.drop-over-downward td {

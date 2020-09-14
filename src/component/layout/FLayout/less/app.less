@@ -1,7 +1,7 @@
 @import "../../../../assets/less/customTheme.less";
 @import "../../../../assets/less/base.less";
 @import "~rework.less/rework.less";
-// @import "../../../../assets/sprite.less";
+@import "../../../../assets/sprite.less";
 
 .app {
     position: relative;
@@ -15,7 +15,7 @@
         }
         .toggle {
             right: -12px;
-            // .sprite(@arrowbg);
+            .sprite(@arrowbg);
             -webkit-transform: rotate(180deg);
             -ms-transform: rotate(180deg);
             transform: rotate(180deg);
@@ -36,7 +36,7 @@
         margin-right: -2px;
         line-height: 50px;
         text-align: center;
-        // .sprite(@arrowbg-open);
+        .sprite(@arrowbg-open);
         margin-top: -8px;
         transition: right linear 0.2s;
         &:hover {

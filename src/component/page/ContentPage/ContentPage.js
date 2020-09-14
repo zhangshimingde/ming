@@ -1,6 +1,5 @@
 import React from 'react';
 import './less/contentPage.less';
-import welcome from './images/welcome.jpg';
 
 const ContentPage = () => {
     const iframeIndex = window.configs.iframeIndex || 'http://erp.kamennet.com/Home/Home';
@@ -20,9 +19,8 @@ const ContentPage = () => {
     }
     return (
         <div className="workflow-container home-box">
-            <img
-                alt="首页"
-                src={welcome}
+            <div
+                className="img"
             />
         </div>
     );

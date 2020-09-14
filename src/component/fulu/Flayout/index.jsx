@@ -1,13 +1,13 @@
 import React from 'react';
 import { LocaleProvider, message, Button, Layout, Alert, Icon, Spin, Modal } from 'antd';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import { withRouter } from "react-router-dom";
-
 import MyHeader from '../Header';
 import MySlider from '../Slider';
 import PageDj from '../error/PageDj';
 import MerchantManager from '../MerchantManager';
+import ErrorBoundary from '../../ErrorBoundary';
+import WebMonitor from '../../widget/WebMonitor';
 import url from 'url';
 import "./index.less";
 import service from '../utils/service';
@@ -91,7 +91,7 @@ class Flayout extends React.PureComponent {
             invitor: null,  // 协作邀请者
             refreshUI: false,
             merchants: [],
-            pollingTime: 30000, // 轮询时间间隔默认30s
+            pollingTime: props.pollingTime || 30000, // 轮询时间间隔默认30s
         };
         this.checkAuth = false;
         const cfgs = this.props.config;
@@ -115,9 +115,10 @@ class Flayout extends React.PureComponent {
                 window.location.href = `${cfgs.host.main}?MerchantId=0`;
             }
         }
-        window.updateMerchantInfo = () => {
+        window.updateMerchantInfo = (cb) => {
             if (localStorage.getItem("MerchantId")) {
                 service.getMerchantContext().then((res) => {
+                    typeof cb === 'function' && cb(res);
                     if (res.code === '0') {
                         const merchantInfo = res.data;
                         window.merchantInfo = merchantInfo;
@@ -125,8 +126,15 @@ class Flayout extends React.PureComponent {
                             merchantInfo,
                         }); 
                     }
+                }).catch((err) => {
+                    typeof cb === 'function' && cb(err);
                 });
             }
+        }
+        window.onSetPollingTime = this.onSetPollingTime;
+        window.returnMerchantZone = this.returnMerchantZone;
+        if (window.monitorOpen) { // 开启埋点收集功能
+            WebMonitor.start(window.monitorConfig);
         }
     }
     toggle = () => {
@@ -552,7 +560,12 @@ class Flayout extends React.PureComponent {
 
         return (
             <LocaleProvider>
-                <Layout style={{ height: '100%', overflow: 'hidden' }}>
+                <Layout
+                    style={{
+                        height: '100%',
+                        overflow: 'hidden',
+                    }}
+                >
                     <Spin
                         spinning={isLoading}
                         tip="拼命加载中...."
@@ -581,6 +594,7 @@ class Flayout extends React.PureComponent {
                             hostUrl={config.host.main}
                             collapsed={this.state.collapsed}
                             pollingTime={this.state.pollingTime}
+                            toggle={this.toggle}
                             menus={authMenus}
                             listMenu={listMenu}
                             appName={appName}
@@ -589,12 +603,13 @@ class Flayout extends React.PureComponent {
                         />
                     }
                     {
-                        (config && !isLoading && !showMerchantZone) && <Layout>
+                        (config && !isLoading && !showMerchantZone) && <Layout className="fl-top-wrapper">
                             <FuluContext.Provider
                                 value={{
                                     merchantInfo: this.state.merchantInfo, // 商户信息
                                     financeInfo: this.state.financeInfo, // 余额信息
                                     merchantList: merchants,
+                                    returnMerchantZone: this.returnMerchantZone,
                                     onSetPollingTime: this.onSetPollingTime,
                                 }}
                             >
@@ -613,10 +628,14 @@ class Flayout extends React.PureComponent {
                                     showSlider={showSlider}
                                     {...this.props}
                                 />
-                                <Content className="layout-content">
-                                    {
-                                        this.props.children
-                                    }
+                                <Content className="layout-content fulu-wrapper">
+                                    <ErrorBoundary
+                                        refreshByRouter
+                                    >
+                                        {
+                                            this.props.children
+                                        }
+                                    </ErrorBoundary>
                                 </Content>
                             </FuluContext.Provider>
                         </Layout>

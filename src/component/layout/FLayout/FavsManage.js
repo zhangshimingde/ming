@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Input } from 'antd';
-import Table from '../../widget/Table';
+// import Table from '../../widget/Table';
 import './less/favsManage.less';
 
-const Search = Input.Search;
+// const Search = Input.Search;
 
 class FavsManage extends React.Component {
     constructor(props) {
@@ -48,7 +48,7 @@ class FavsManage extends React.Component {
 
     }
     onSearch() {
-        const { searchKey, pageIndex, pageSize } = this.state;
+        // const { searchKey, pageIndex, pageSize } = this.state;
     }
     onRefresh() {
         this.setState({
@@ -69,10 +69,11 @@ class FavsManage extends React.Component {
                     placeholder="搜索您要查询的关键字"
                 />
                 <Button onClick={this.onRefresh} style={{ float: 'right' }}>刷新</Button>
-                <Table
+                <p>功能暂未开通</p>
+                {/* <Table
                     columns={this.columns}
                     dataSource={[]}
-                />
+                /> */}
             </div>
         );
     }

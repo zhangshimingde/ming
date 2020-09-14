@@ -1,46 +1,25 @@
-// 按钮样式
-.ant-btn {
-    height: auto !important;
-    padding: 5px 32px !important;
-    .rounded-corners;
-}
+/**
+*@desc    组件化Button样式表
+*@author  zhangkegui@fulu.com
+*@date    2020-1-2
+*@version 2.0
+**/
+@btnMargin: 6px;
+// @primaryHoverColor: #46A6FF;
+@gray: #f8f8f8;
+@fontColor: #666;
 
-.ant-btn-sm {
-    height: 24px !important;
-    padding: 0 7px !important;
-    font-size: 14px !important;
-    border-radius: 4px !important;
-}
-
-// 主要按钮样式
-.ant-btn-primary {
-    height: auto !important;
-    background: @btn-primary-color;
-    color: #fff;
-    border: none !important;
-    padding: 6px 32px !important;
-
-    &:hover {
-        background: @btn-primary-color-hover;
+.fulu-wrapper {
+    .ant-btn > .anticon + span, .ant-btn > span + .anticon {
+        margin-left: 4px;
     }
-}
-
-// 主要按钮禁用样式
-.ant-btn-primary[disabled],
-.ant-btn-primary-disabled {
-    background: @btn-primary-color-disabled;
-    color: #fff !important;
-
-    &:hover {
-        background: @btn-primary-color-disabled;
-    }
+    .btnStyle;
 }
 
 // 同类次级按钮
 .ant-btn-secondary {
     border: 1px solid @border-color;
     color: @black-color;
-
     &:hover,
     &:active {
         background: @light-blue-color-background;
@@ -68,7 +47,6 @@
     background: #fff !important;
     color: @btn-primary-color;
     border: 1px solid @light-blue-color;
-
     &:hover {
         background: @light-blue-color-background;
     }
@@ -85,8 +63,6 @@
         background: #fff !important;
     }
 }
-
-.small-btn {}
 
 // 输入区弹框选择
 .ant-btn-modal {

@@ -89,18 +89,18 @@ class BaseTable extends PureComponent {
         // 展示分页
         if (pagination) {
             // const { pageSize } = this.state;
-            const { handleUpdate } = pagination || {};
+            const { handleUpdate, showQuickJumper = true, showSizeChanger = true } = pagination || {};
             const listTotalNum = pagination.total || total || 0;
             const defaultPagination = {
-                showQuickJumper: true,
-                showSizeChanger: true,
+                showQuickJumper,
+                showSizeChanger,
                 total: listTotalNum,
                 loading,
                 pageSizeOptions: pagination.pageSizeOptions || PAGE_SIZE_OPTIONS,
                 showTotal: () => {
                     return (
                         <Fragment>
-                            <span className="page-total">{`共 ${listTotalNum} 条记录`}</span>
+                            <span className="page-total">{`共 ${listTotalNum} 条`}</span>
                             {
                                 typeof handleUpdate === 'function' ? 
                                     <span
@@ -219,15 +219,18 @@ class BaseTable extends PureComponent {
                             </Tooltip>
                         );
                     }
-                    return (
-                        <span
-                            className="cell-nowrap"
-                            title={showDecimal}
-                            style={{ maxWidth: this.getCellMaxWidth(columnEntity) }}
-                        >
-                            {showDecimal}
-                        </span>
-                    );
+                    // return (
+                    //     <span
+                    //         className="cell-nowrap"
+                    //         title={showDecimal}
+                    //         style={{
+                    //             maxWidth: this.getCellMaxWidth(columnEntity)
+                    //         }}
+                    //     >
+                    //         {showDecimal}
+                    //     </span>
+                    // );
+                    return (<span title={showDecimal}>{showDecimal}</span>);
                     
                 }
                 if (isFakeData(record)) {
@@ -274,19 +277,20 @@ class BaseTable extends PureComponent {
                             </Tooltip>
                         );
                     }
-                    return (
-                        <span
-                            className="cell-nowrap"
-                            title={text}
-                            style={{ maxWidth: this.getCellMaxWidth(columnEntity) }}
-                        >
-                            {text}
-                        </span>
-                    );
+                    // return (
+                    //     <span
+                    //         className="cell-nowrap"
+                    //         title={text}
+                    //         style={{
+                    //             maxWidth: this.getCellMaxWidth(columnEntity),
+                    //         }}
+                    //     >
+                    //         {text}
+                    //     </span>
+                    // );
+                    return (<span title={text}>{text}</span>);
                 }
-                return (
-                   <span>{text}</span>
-                );
+                return (<span title={text}>{text}</span>);
             };
         });
         const lastColumn = columnsCopy[columnsCopy.length - 1];
@@ -413,10 +417,12 @@ class BaseTable extends PureComponent {
         }
         resetProps.rowSelection = this.handleRowSelection();
         resetProps.size = "small";
+        if (!this.props.hasOwnProperty('bordered')) {
+            resetProps.bordered = true;
+        }
         return {
             ...resetProps,
             rowKey,
-            bordered: true,
             dataSource: this.handleDataSource(dataSource),
             pagination: this.handlePagination(),
         };

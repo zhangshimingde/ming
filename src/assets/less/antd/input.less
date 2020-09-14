@@ -1,4 +1,42 @@
 
+.fulu-wrapper {
+    .ant-input-number {
+        color: @fontColor;
+        height: @primaryHeight;
+        &:not(.ant-input-number-disabled) {
+            &:hover,&:focus,&:active {
+                border-color: @primaryColor;
+                box-shadow: none;
+            }
+        }
+        .ant-input-number-input {
+            height: 34px;
+            caret-color: @primaryColor;
+        }
+        &.ant-input-number-sm {
+            height: @smallHeight;
+            .ant-input-number-input {
+                height: 26px;
+                font-size: @fontSmSize;
+            }
+        }
+    }
+    .ant-input {
+        height: @primaryHeight;
+        border-color: @borderColor !important;
+        color: @fontColor;
+        padding-left: @basePadding;
+        &:hover, &:active, &:focus {
+            border-color: @primaryColor !important;
+            box-shadow: none;
+        }
+        caret-color: @primaryColor;
+        &.ant-input-sm {
+            height: @smallHeight;
+            font-size: @fontSmSize;
+        }
+    }
+}
 .ant-input-disabled {
     border: 1px solid @border-color  !important;
 }

@@ -4,6 +4,7 @@ import CustomSettings from '../FLayout/CustomSettings';
 import BasicInformation from '../FLayout/BasicInformation';
 import FavsManage from '../FLayout/FavsManage';
 import IframePage from '../../page/IframePage';
+import ContentPage from '../../page/ContentPage';
 
 // 用户中心路由配置信息
 const userPathConfig = {
@@ -32,7 +33,7 @@ export default function RouteWithLayout({ layout, component, userCenterConfig = 
                     composeProps.xc = userPathConfig[rest.path];
                     return React.createElement(layout, composeProps);
                 }
-                composeProps.xc = component;
+                composeProps.xc = component || React.homePage || ContentPage;
                 return React.createElement(layout, composeProps);
             }}
         />

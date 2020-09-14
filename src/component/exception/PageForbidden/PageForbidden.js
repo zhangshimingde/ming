@@ -1,5 +1,5 @@
 import React from 'react';
-import { Placeholder } from '../../widget';
+import Placeholder from '../../widget/Placeholder';
 import './less/pageForbidden.less';
 
 const clearCache = () => {

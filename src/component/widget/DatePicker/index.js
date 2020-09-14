@@ -1,7 +1,9 @@
 import SinglePicker from './SinglePicker';
-import DoublePicker from './DoublePicker';
 import MyMonthPicker from './MyMonthPicker';
+import FlRangePicker from './FlRangePicker';
+// import { DatePicker as Dp } from 'antd';
 const DatePicker = SinglePicker;
-DatePicker.RangePicker = DoublePicker;
 DatePicker.MonthPicker = MyMonthPicker;
+DatePicker.RangePicker = FlRangePicker;
+// DatePicker.RangePicker = Dp.RangePicker;
 export default DatePicker;

@@ -24,7 +24,8 @@ export default [{
     label: '监控应用',
     type: 'Select',
     name: 'clientId',
-    initialValue: '',
+    mode: 'multiple',
+    initialValue: [],
     items: [
         { name: '全部应用', value: '' },
         { name: 'SUP', value: 'SUP' },

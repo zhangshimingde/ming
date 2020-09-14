@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import { DropPanel } from '../../widget';
+import DropPanel from '../../widget/DropPanel';
 import arrow from './images/arrow.svg';
 import avatar from './images/avatar.svg';
 import setting from './images/setting.svg';
